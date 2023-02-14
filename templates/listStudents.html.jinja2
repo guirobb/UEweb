@@ -1,0 +1,38 @@
+{% extends "layout.html.jinja2" %}
+
+{% block body %}
+
+    <div class="container">
+
+
+    <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="main-breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="./">Home</a></li>
+          <li class="breadcrumb-item"><a href="javascript:void(0)">List Students</a></li>
+        </ol>
+      </nav>
+      <!-- /Breadcrumb -->
+
+    <!--ListStudents-->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 gutters-sm m-4">
+        <div class="col mb-3">
+          <div class="card" style="border-radius: 15px;">
+            <img src="https://www.bootdey.com/image/340x120/FFB6C1/000000" alt="Cover" class="card-img-top">
+            <div class="card-body text-center">
+              <img src="https://bootdey.com/img/Content/avatar/avatar1.png" style="width:100px;margin-top:-65px" alt="User" class="img-fluid img-thumbnail rounded-circle border-0 mb-3">
+              <h5 class="card-title">Utilisateur 1</h5>
+              <p class="text-secondary mb-1">Developer</p>
+              <p class="text-muted font-size-sm">Entreprise</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-light btn-sm bg-white has-icon btn-block" type="button"><i class="material-icons">add</i>Follow</button>
+              <button class="btn btn-light btn-sm bg-white has-icon ml-2" type="button"></button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <!--/ListStudents-->
+
+    </div>
+{% endblock %}
