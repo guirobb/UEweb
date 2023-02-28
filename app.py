@@ -17,8 +17,8 @@ app.config["SECRET_KEY"] = "secret_key1234"
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database/database.db"
 # db_path = os.path.join(os.path.dirname(__file__), 'database/database.db')
 # db_uri = 'sqlite:///{}'.format(db_path)
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///C:\\Users\\carlos\\Repos\\IMT2022\\WEB\\UEweb\\database/database.db'
-# app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///C:\\Users\\guill\\PycharmProjects\\flaskProject1\\database/database.db'
+# app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///C:\\Users\\carlos\\Repos\\IMT2022\\WEB\\UEweb\\database/database.db'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///C:\\Users\\guill\\PycharmProjects\\flaskProject1\\database/database.db'
 
 db.init_app(app)
 with app.test_request_context():  # (2) bloc exécuté à l'initialisation de Flask
