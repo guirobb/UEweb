@@ -133,8 +133,18 @@ if __name__ == '__main__':
 def deleteStudent():
     id = request.form['id']
     db_deleteStudent(id)
-    students = Student.query.all()
-    print(students)
+    return redirect("http://127.0.0.1:5000/list/students")
+
+@app.route("/delete/enterprise/", methods=["POST"])
+def deleteEnterprise():
+    id = request.form['id']
+    db_deleteEnterprise(id)
+    return redirect("http://127.0.0.1:5000/list/students")
+
+@app.route("/delete/taf/", methods=["POST"])
+def deleteTaf():
+    id = request.form['id']
+    db_deleteTaf(id)
     return redirect("http://127.0.0.1:5000/list/students")
 
 
@@ -151,6 +161,22 @@ def updateStudent():
     return redirect("http://127.0.0.1:5000/list/students")
 
 
+@app.route("/update/enterprise", methods=["POST"])
+def updateEnterprise():
+    id = request.form['id']
+    name = request.form['Input-name']
+    db_updateEnterprise(id, name,)
+    return redirect("http://127.0.0.1:5000/list/students")
+
+@app.route("/update/taf", methods=["POST"])
+def updateTaf():
+    id = request.form['id']
+    name = request.form['Input-name']
+    director = request.form["Input-Director"]
+    db_updateTaf(id, name, director)
+    return redirect("http://127.0.0.1:5000/list/students")
+
+
 @app.route('/enterprise')
 def search_enterprise():
     search_text = request.args.get('enterprise', default='*', type=str)
@@ -158,3 +184,32 @@ def search_enterprise():
     enterprises = Enterprise.query.filter(Enterprise.name.ilike(f'%{search_text}%')).all()
     print(enterprises)
     return render_template("enterprise.html.jinja2", enterprises=enterprises)
+
+
+@app.route("/add/student", methods=["POST"])
+def addStudent():
+    first_name = request.form['Input-firstname']
+    name = request.form['Input-name']
+    nationality = request.form['select-nationality']
+    birth_date = request.form["Input-Date"]
+    taf1 = request.form['select-TAF1']
+    taf2 = request.form['select-TAF2']
+    promo = request.form['select-Promo']
+    stage = request.form['select-Stage']
+    occupation = request.form['Input-Stage']
+    db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, stage, promo, occupation)
+    return redirect("http://127.0.0.1:5000/list/students")
+
+@app.route("/add/enterprise", methods=["POST"])
+def addEnterprise():
+    name = request.form['Input-name']
+    db_addEnterprise(name)
+    return redirect("http://127.0.0.1:5000/list/students")
+
+@app.route("/add/taf", methods=["POST"])
+def addTaf():
+    name = request.form['Input-name']
+    director = request.form["Input-Director"]
+    db_updateTaf(name, director)
+    return redirect("http://127.0.0.1:5000/list/students")
+
