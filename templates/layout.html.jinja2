@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>IMTAlumni</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" crossorigin="anonymous"/>
     <link rel="stylesheet" href="{{ url_for("static", filename="vendor/bootstrap/css/bootstrap.min.css") }}" crossorigin="anonymous"/>
     <link rel="icon" type="image/x-icon" href="{{ url_for("static", filename="icon/favicon.ico")}}" crossorigin="anonymous">
 </head>
@@ -13,7 +14,7 @@
     <div class="container">
         <nav class="navbar navbar-expand-lg sticky-bottom bg-body-tertiary bg-white">
           <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" style="margin-left:2rem;" href="#">
               <img src="{{ url_for("static", filename="img/Logo_Institut_Mines-Telecom.svg") }}" alt="Navbar" height="32">
                <span class="navbar-brand mb-0 h1 text-dark">IMT Alumni <strong>DCL Version</strong> </span>
             </a>
@@ -30,12 +31,16 @@
               </ul>
             </div>
 
-            <div class="btn-group">
-                <button class="btn btn-md dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-person-circle"></i>
+            <div class="btn-group" style="margin-right: 4rem;">
+                <button class="btn btn-md dropdown-toggle text-primary" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle font-2"></i>
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">Hello <strong>Utilisateur</strong>!</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/list/students">Liste des Élèves</a></li>
+                    <li><a class="dropdown-item" href="/admin/edit/taf">TAFs</a></li>
+                    <li><a class="dropdown-item" href="/admin/companies/list">Liste des entreprises</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Log out</a></li>
                 </ul>
@@ -46,7 +51,7 @@
 {% block body %}
 {% endblock %}
 
-
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="{{ url_for("static", filename="vendor/bootstrap/js/bootstrap.min.js") }}"></script>
 </body>
 </html>
