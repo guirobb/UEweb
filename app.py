@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -11,14 +10,14 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "secret_key1234"
 
-#app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database/database.db"
-#db_path = os.path.join(os.path.dirname(__file__), 'database/database.db')
-#db_uri = 'sqlite:///{}'.format(db_path)
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///C:\\Users\\guill\\PycharmProjects\\flaskProject1\\database/database.db'
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database/database.db"
+# db_path = os.path.join(os.path.dirname(__file__), 'database/database.db')
+# db_uri = 'sqlite:///{}'.format(db_path)
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///C:\\Users\\carlos\\Repos\\IMT2022\\WEB\\UEweb\\database/database.db'
 
 db.init_app(app)
-with app.test_request_context(): # (2) bloc exécuté à l'initialisation de Flask
- init_database()
+with app.test_request_context():  # (2) bloc exécuté à l'initialisation de Flask
+    init_database()
 
 
 # @app.route("/clean")
@@ -27,17 +26,19 @@ def clean():
     db.create_all()
     return "Cleaned!"
 
+
 @app.route('/')
 def index():
     print(clean())
     return render_template("layout.html.jinja2")
 
+
 @app.route("/test")
 def test():
     clean()
-    #student1 = Taf(name="Dassault", director="Pastor")
-    #db.session.add(student1)
-    #db.session.commit()
+    # student1 = Taf(name="Dassault", director="Pastor")
+    # db.session.add(student1)
+    # db.session.commit()
     create_test_db()
     sports = Taf.query.all()
 
@@ -51,15 +52,22 @@ def students():
     print(students)
     return render_template("listStudents.html.jinja2", students=students)
 
-@app.route('/adm/edit/students')
+
+@app.route('/list/students/edit')
 def edit_students():
-    return render_template("edituser.html.jinja2")
+    create_test_db()
+    ident = request.args.get('id', default='*', type=int)
+    student = Student.query.filter(Student.id == ident)
+    taf = Taf.query.all()
+    print(student[0].birth_date)
+    return render_template("edituser.html.jinja2", student=student, taf=taf)
+
 
 @app.route('/promo')
 def affiche_promo():
     print("coucou")
     create_test_db()
-    promo = request.args.get('promo', default = '*', type = str)
+    promo = request.args.get('promo', default='*', type=str)
     print(promo)
     students = Student.query.filter(Student.promo == promo)
     return render_template("listStudents.html.jinja2", students=students)
@@ -88,6 +96,6 @@ def create_test_db():
                        taf2=1, stage=0, promo="2024", occupation="Chef de projet")
     db.session.add(etudiant)
     etudiant2 = Student(name="Vigouroux", first_name="Laure", nationality="French", birth_date=datetime.now(), taf1=1,
-                       taf2=0, stage=0, promo="2023", occupation="Developpeur")
+                        taf2=0, stage=0, promo="2023", occupation="Developpeur")
     db.session.add(etudiant2)
     db.session.commit()

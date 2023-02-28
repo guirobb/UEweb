@@ -1,4 +1,67 @@
 {% extends "layout.html.jinja2" %}
 
 {% block body %}
+ <div class="container">
+ {% for st in student %}
+   <div class="row g-0 align-items-center">
+    <div class="col-md-4 pt-3 text-center">
+        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" style="border-radius:50%; width:250px; weight:250px;" class="img-fluid">
+        <h1 class="mt-1"><strong>{{ st.first_name }} {{ st.name }}</strong> </h1>
+    </div>
+    <div class="col-md-8 p-3">
+      <form>
+        <div class="mb-3">
+          <label for="Input-name" class="form-label text-primary">Nom</label>
+          <input type="text" class="form-control" id="Input-name" aria-describedby="nameHelp"value="{{ st.name }}">
+          <div id="nameHelp" class="form-text">Edit the Nom.</div>
+        </div>
+        <div class="mb-3">
+          <label for="Input-firstname" class="form-label text-primary">Prénom</label>
+          <input type="text" class="form-control" id="Input-firstname" aria-describedby="firstnameHelp" value="{{ st.first_name }}">
+          <div id="fistnameHelp" class="form-text">Edit the Prénom.</div>
+        </div>
+        <div class="mb-3">
+            <label for="select-nationality" class="form-label text-primary">Nationalité</label>
+            <select class="form-select mb-3" aria-label=".form-select" id="select-nationality">
+                <option selected>Nationalité</option>
+                <option value="FR">France</option>
+                <option value="AU">Autres</option>
+              </select>
+        </div>
+        <div class="mb-3">
+          <label for="Input-Date" class="form-label text-primary">Date</label>
+          <input type="text" class="form-control" id="Input-Date" value=" {% set x = st.birth_date | string() %}{{ x[:10] }}">
+        </div>
+        <div class="mb-3">
+          <label for="select-TAF1" class="form-label text-primary">Première TAF</label>
+          <select class="form-select  mb-3" aria-label=".form-select-md" id="select-TAF1" value="{{ st.taf1 }}">
+            <option default disabled>Select option</option>
+              {% for tf in taf %}
+                <option value="{{ tf.id }}">{{ tf.name }}</option>
+              {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="select-TAF2" class="form-label text-primary">Deuxième TAF</label>
+          <select class="form-select mb-3" aria-label=".form-select" id="select-TAF2" value="{{ st.taf2 }}">
+            <option default disabled>Select option</option>
+              {% for tf in taf %}
+                <option value="{{ tf.id }}">{{ tf.name }}</option>
+              {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-5">
+          <button type="button" class="btn btn-secondary btn-md">Discard</button>
+          <button type="submit" class="btn btn-primary btn-md" >Save chages</button>
+        </div>
+      </form>
+    </div>
+    </div>
+ {% endfor %}
+    </div>
+
 {% endblock %}
