@@ -18,8 +18,7 @@ def db_deleteEnterprise(id) :
     db.session.commit()
 
 def db_deleteStudent(id) :
-    print("delete")
-    print(id)
+    print("db_deleteStudent")
     student = Student.query.get(id)
     db.session.delete(student)
     db.session.commit()
