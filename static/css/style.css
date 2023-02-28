@@ -1,3 +1,32 @@
+html body{
+    font-family: 'Inter', sans-serif !important;
+    color: #2b2b2b !important;
+}
+
+.card:hover {
+
+  box-shadow: 5px 6px 6px 2px #e9ecef62;
+  transform: scale(1.01);
+}
+
+.card{
+  transition: all 0.2s ease;
+  border-radius: 17px;
+}
+
+.border_top-rounded{
+     border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+}
+
+.border_bottom-rounded{
+    border-radius: 0px 0px 15px 15px !important;
+}
+
+.no-border{
+    border: none !important;
+}
+
 .font-6{
     font-size:6rem !important;
 }
