@@ -21,3 +21,7 @@
 .font-1{
     font-size: 1rem !important;
 }
+
+.hidden{
+    display: none !important;
+}

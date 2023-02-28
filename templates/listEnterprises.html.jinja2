@@ -25,18 +25,27 @@
                 <tbody>
                     {% for company in companies %}
                     <tr>
-                      <th scope="row">{{ company.id }}</th>
-                      <td>{{ company.name }}</td>
-                      <td>
-                          <a class="btn btn-light btn-sm btn-block text-primary" >
-                              <i class="bi bi-pencil-fill"></i>
-                              <strong>Edit</strong>
-                          </a>
-                          <a class="btn btn-light btn-sm btn-block text-danger" >
-                              <i class="bi bi-trash"></i>
-                              <strong>Delete</strong>
-                          </a>
-                      </td>
+                        <th scope="row">{{ company.id }}</th>
+                        <td id="label_name-{{ company.id }}">{{ company.name }}</td>
+                        <td id="edit_name-{{ company.id }}" class="hidden">
+                            <input type="text" class="form-control" style="width: 250px !important;" aria-describedby="Input_Enterprise-{{ company.id }}_help" value="{{ company.name }}">
+                        </td>
+                        <td>
+                            <a id="edit_btn{{ company.id }}"  class="btn btn-light btn-sm btn-block text-primary" onclick="enableEditCompany('{% set iid = company.id | string() %}{{ iid }}', '{% set nameCompany = company.name | string() %}{{ nameCompany }}')" >
+                                <i class="bi bi-pencil-fill"></i>
+                                <strong>Edit</strong>
+                            </a>
+                            <a class="btn btn-light btn-sm btn-block text-danger" >
+                                <i class="bi bi-trash"></i>
+                                <strong>Delete</strong>
+                            </a>
+
+
+                            <a id="save_btn{{ company.id }}" class="btn btn-success btn-sm btn-block text-light hidden" >
+                                <i class="bi bi-save2-fill"></i>
+                                <strong>Save</strong>
+                            </a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
