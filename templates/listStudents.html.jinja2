@@ -14,9 +14,9 @@ function deleteStudent(id) {
 
     <div class="container">
 
-
+    <h1 class="text-dark"><strong>Listes des élèves</strong></h1>
     <!-- Breadcrumb -->
-      <nav aria-label="breadcrumb" class="main-breadcrumb">
+      <nav aria-label="breadcrumb" class="main-breadcrumb mx-3">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="./">Home</a></li>
           <li class="breadcrumb-item"><a href="javascript:void(0)">List Students</a></li>
@@ -25,27 +25,27 @@ function deleteStudent(id) {
       <!-- /Breadcrumb -->
 
     <!--ListStudents-->
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 gutters-sm m-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 m-4">
         {% for student in students %}
         <div class="col mb-3">
 
-          <div class="card" style="border-radius: 15px;">
-            <img src="https://www.bootdey.com/image/340x120/FFB6C1/000000" alt="Cover" class="card-img-top">
-            <div class="card-body text-center">
+          <div class="card no-border" style="border-radius: 15px;">
+            <img src="https://www.bootdey.com/image/340x120/FFB6C1/000000" alt="Cover" class="card-img-top border_top-rounded">
+            <div class="card-body text-center no-border">
               <img src="https://bootdey.com/img/Content/avatar/avatar1.png" style="width:100px;margin-top:-65px" alt="User" class="img-fluid img-thumbnail rounded-circle border-0 mb-3">
-              <h5 class="card-title">{{ student.first_name }} {{ student.name}} </h5>
+              <h5 class="card-title"><strong>{{ student.first_name }} {{ student.name}}</strong> </h5>
               <a class="nav-link"  href="../promo?promo={{ student.promo }}">Promotion : {{ student.promo }}</a>
               <p class="text-muted font-size-sm">Poste actuel : {{ student.occupation }}</p>
             </div>
-            <div class="card-footer">
-              <a class="btn btn-light btn-sm btn-block text-primary" href="/list/students/edit?id={{ student.id }}">
+            <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-center border_bottom-rounded no-border">
+              <a class="btn btn-light btn-md btn-block text-primary" href="/list/students/edit?id={{ student.id }}">
                   <i class="bi bi-pencil-fill"></i>
-                  Edit
+                  <strong>Edit</strong>
               </a>
                 <form action="/../../delete/student/" method="post">
-              <button class="btn btn-light btn-sm text-secondary" type="submit" value="{{ student.id }}" name="id">
+              <button class="btn btn-light btn-md text-secondary" type="submit" value="{{ student.id }}" name="id">
                   <i  class="bi bi-trash"></i>
-                  Delete
+                  <strong>Delete</strong>
               </button>
                 </form>
             </div>
