@@ -2,13 +2,13 @@ from database.models import *
 from datetime import datetime
 
 
-def db_updateStudent(id, first_name, name, nationality, birth_date, taf1, taf2, stage, promo, occupation):
+def db_updateStudent(id, first_name, name, nationality, taf1, taf2, stage, promo, occupation):
     print("db_updateStudent")
     student = Student.query.get(id)
     student.first_name = first_name
     student.name = name
     student.nationality = nationality
-    student.birth_date = birth_date
+    #student.birth_date = birth_date
     student.taf1 = taf1
     student.taf2 = taf2
     student.stage = stage

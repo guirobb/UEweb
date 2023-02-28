@@ -10,6 +10,10 @@ def create_test_db():
     db.session.add(taf2)
     enterprise = Enterprise(name="CGI")
     db.session.add(enterprise)
+    enterprise2 = Enterprise(name="Cap Gemini")
+    db.session.add(enterprise2)
+    enterprise3 = Enterprise(name="EDF")
+    db.session.add(enterprise3)
     tutor = Tutor(name="Tolosa", first_name="Jean", number="0123456789", mail="j.t@cgi.fr", enterprise=0)
     db.session.add(tutor)
     stage = Stage(title="Code un truc", date_start=datetime.now(), date_end=datetime.now(), resume="resume",

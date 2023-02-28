@@ -97,7 +97,7 @@ def affiche_taf():
     start = request.args.get('start', default='*', type=int)
     students = Student.query.filter(
         ((Student.taf1 == promo) & ((Student.promo - 1 <= end) & (Student.promo - 1 >= start))) | (
-                    (Student.taf2 == promo) & ((Student.promo <= end) & (Student.promo >= start))))
+                (Student.taf2 == promo) & ((Student.promo <= end) & (Student.promo >= start))))
     return render_template("listStudents.html.jinja2", students=students)
 
 
@@ -108,7 +108,6 @@ if __name__ == '__main__':
 
 @app.route('/student')
 def affiche_student():
-
     promo = request.args.get('student', default='*', type=int)
     print(promo)
     student = Student.query.filter(Student.id == promo)
@@ -116,8 +115,30 @@ def affiche_student():
 
 
 @app.route("/student/<id>", methods=["DELETE"])
-def deleteStudent(id) :
+def deleteStudent(id):
     db_deleteStudent(id)
     students = Student.query.all()
     print(students)
     return redirect("http://127.0.0.1:5000/list/students")
+
+
+@app.route("/student/<id>", methods=["PUT"])
+def updateStudent(id):
+    first_name = request.json['first_name']
+    name = request.json['name']
+    nationality = request.json['nationality']
+    taf1 = request.json['taf1']
+    taf2 = request.json['taf2']
+    stage = request.json['stage']
+    promo = request.json['promo']
+    occupation = request.json['occupation']
+    db_updateStudent(id, first_name, name, nationality, taf1, taf2, stage, promo, occupation)
+    return redirect("http://127.0.0.1:5000/list/students")
+
+@app.route('/enterprise')
+def search_enterprise():
+    search_text = request.args.get('enterprise', default='*', type=str)
+    print(search_text)
+    enterprises = Enterprise.query.filter(Enterprise.name.ilike(f'%{search_text}%')).all()
+    print(enterprises)
+    return render_template("enterprise.html.jinja2", enterprises=enterprises)
