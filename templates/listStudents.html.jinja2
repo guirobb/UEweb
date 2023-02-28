@@ -32,12 +32,12 @@ function promo(promo){
               <a class="nav-link"  href="../promo?promo={{ student.promo }}">Promotion : {{ student.promo }}</a>
               <p class="text-muted font-size-sm">Poste actuel : {{ student.occupation }}</p>
             </div>
-            <div class="card-footer">
-              <a class="btn btn-light btn-sm btn-block text-primary" href="/list/students/edit?id={{ student.id }}">
+            <div class="card-footer text-center">
+              <a class="btn btn-light btn-lg btn-block text-primary" href="/list/students/edit?id={{ student.id }}">
                   <i class="bi bi-pencil-fill"></i>
-                  Edit
+                  <strong>Edit</strong>
               </a>
-              <button class="btn btn-light btn-sm text-secondary" type="button">
+              <button class="btn btn-light btn-lg text-secondary" type="button">
                   <i  class="bi bi-trash"></i>
                   Delete
               </button>
