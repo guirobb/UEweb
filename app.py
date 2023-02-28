@@ -59,11 +59,29 @@ def edit_students():
 def affiche_promo():
     print("coucou")
     create_test_db()
-    promo = request.args.get('promo', default = '*', type = str)
+    promo = request.args.get('promo', default='*', type=int)
     print(promo)
     students = Student.query.filter(Student.promo == promo)
     return render_template("listStudents.html.jinja2", students=students)
 
+@app.route('/stage')
+def affiche_stage() :
+    print("coucou")
+    create_test_db()
+    promo = request.args.get('stage', default='*', type=int)
+    print(promo)
+    students = Student.query.filter(Student.stage == promo)
+    return render_template("listStudents.html.jinja2", students=students)
+
+@app.route('/taf')
+def affiche_taf() :
+    create_test_db()
+    promo = request.args.get('taf', default='*', type=str)
+    print(promo)
+    end = request.args.get('end', default='*', type=int)
+    start = request.args.get('start', default='*', type=int)
+    students = Student.query.filter(((Student.taf1 == promo) & ((Student.promo-1 <= end) & (Student.promo-1 >= start))) | ((Student.taf2 == promo) & ((Student.promo <=end) & (Student.promo >= start))))
+    return render_template("listStudents.html.jinja2", students=students)
 
 if __name__ == '__main__':
     db = SQLAlchemy(app)
@@ -85,9 +103,9 @@ def create_test_db():
                   rapport="rapport", tutor=0, enterprise=0)
     db.session.add(stage)
     etudiant = Student(name="Pichereau", first_name="Hugo", nationality="French", birth_date=datetime.now(), taf1=0,
-                       taf2=1, stage=0, promo="2024", occupation="Chef de projet")
+                       taf2=1, stage=0, promo=2024, occupation="Chef de projet")
     db.session.add(etudiant)
     etudiant2 = Student(name="Vigouroux", first_name="Laure", nationality="French", birth_date=datetime.now(), taf1=1,
-                       taf2=0, stage=0, promo="2023", occupation="Developpeur")
+                       taf2=0, stage=0, promo=2023, occupation="Developpeur")
     db.session.add(etudiant2)
     db.session.commit()
