@@ -17,9 +17,8 @@ app.config["SECRET_KEY"] = "secret_key1234"
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database/database.db"
 # db_path = os.path.join(os.path.dirname(__file__), 'database/database.db')
 # db_uri = 'sqlite:///{}'.format(db_path)
-#app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///C:\\Users\\carlos\\Repos\\IMT2022\\WEB\\UEweb\\database/database.db'
-app.config[
-    "SQLALCHEMY_DATABASE_URI"] = 'sqlite:///C:\\Users\\guill\\PycharmProjects\\flaskProject1\\database/database.db'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///C:\\Users\\carlos\\Repos\\IMT2022\\WEB\\UEweb\\database/database.db'
+# app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///C:\\Users\\guill\\PycharmProjects\\flaskProject1\\database/database.db'
 
 db.init_app(app)
 with app.test_request_context():  # (2) bloc exécuté à l'initialisation de Flask
@@ -62,13 +61,36 @@ def students():
 
 @app.route('/list/students/edit')
 def edit_students():
-    create_test_db()
     ident = request.args.get('id', default='*', type=int)
     student = Student.query.filter(Student.id == ident)
     taf = Taf.query.all()
-    print(student[0].birth_date)
     return render_template("edituser.html.jinja2", student=student, taf=taf)
 
+
+@app.route('/admin/taf/list')
+def list_Taf():
+    ListTaf = Taf.query.all()
+    return render_template("listTaf.html.jinja2", listTaf=ListTaf)
+
+
+@app.route('/admin/taf/edit')
+def edit_taf():
+    id_taf = request.args.get('id', default='*', type=int)
+    taf = Taf.query.filter(Taf.id == id_taf)
+    return render_template("editTaf.html.jinja2", taf=taf)
+
+
+@app.route('/admin/companies/list')
+def list_company():
+    companies = Enterprise.query.all()
+    return render_template("listEnterprises.html.jinja2", companies=companies)
+
+
+@app.route('/admin/company/edit')
+def edit_company():
+    id_company = request.args.get('id', default='*', type=int)
+    enterp = Enterprise.query.filter(Enterprise.id == id_company)
+    return render_template("editTaf.html.jinja2", company=enterp)
 
 
 @app.route('/promo')
@@ -134,6 +156,7 @@ def updateStudent(id):
     occupation = request.json['occupation']
     db_updateStudent(id, first_name, name, nationality, taf1, taf2, stage, promo, occupation)
     return redirect("http://127.0.0.1:5000/list/students")
+
 
 @app.route('/enterprise')
 def search_enterprise():
