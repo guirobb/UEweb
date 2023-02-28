@@ -2,18 +2,19 @@ from database.models import *
 from datetime import datetime
 
 
-def db_updateStudent(id, first_name, name, nationality, taf1, taf2, stage, promo, occupation):
+def db_updateStudent(id, first_name, name, nationality, taf1, taf2, birth_date):
     print("db_updateStudent")
     student = Student.query.get(id)
     student.first_name = first_name
     student.name = name
     student.nationality = nationality
-    #student.birth_date = birth_date
+    if (birth_date!="") :
+        birth_date2 = datetime.strptime(request.form["Input-Date"],
+                                   '%Y-%m-%d')
+        student.birth_date = birth_date2
     student.taf1 = taf1
     student.taf2 = taf2
-    student.stage = stage
-    student.promo = promo
-    student.occupation = occupation
+
     db.session.commit()
 
 
