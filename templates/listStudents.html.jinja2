@@ -4,6 +4,11 @@ function promo(promo){
         const url = "http://127.0.0.1:5000/promo?promo="+promo;
         window.location.href = url;
     };
+function deleteStudent(id) {
+  fetch("../../student" + id,  {
+    method: 'DELETE'
+  })
+}
 </script>
 {% block body %}
 
@@ -32,15 +37,17 @@ function promo(promo){
               <a class="nav-link"  href="../promo?promo={{ student.promo }}">Promotion : {{ student.promo }}</a>
               <p class="text-muted font-size-sm">Poste actuel : {{ student.occupation }}</p>
             </div>
-            <div class="card-footer text-center">
-              <a class="btn btn-light btn-lg btn-block text-primary" href="/list/students/edit?id={{ student.id }}">
+            <div class="card-footer">
+              <a class="btn btn-light btn-sm btn-block text-primary" href="/list/students/edit?id={{ student.id }}">
                   <i class="bi bi-pencil-fill"></i>
-                  <strong>Edit</strong>
+                  Edit
               </a>
-              <button class="btn btn-light btn-lg text-secondary" type="button">
+                <form action="/../../delete/student/" method="post">
+              <button class="btn btn-light btn-sm text-secondary" type="submit" value="{{ student.id }}" name="id">
                   <i  class="bi bi-trash"></i>
                   Delete
               </button>
+                </form>
             </div>
           </div>
 
@@ -51,3 +58,4 @@ function promo(promo){
 
     </div>
 {% endblock %}
+

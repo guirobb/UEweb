@@ -9,20 +9,21 @@
         <h1 class="mt-1"><strong>{{ st.first_name }} {{ st.name }}</strong> </h1>
     </div>
     <div class="col-md-8 p-3">
-      <form>
+      <form action="http://127.0.0.1:5000/update/student" method="post">
         <div class="mb-3">
           <label for="Input-name" class="form-label text-primary">Nom</label>
-          <input type="text" class="form-control" id="Input-name" aria-describedby="nameHelp"value="{{ st.name }}">
+            <input value="{{ st.id }}" type="hidden" name="id">
+          <input type="text" class="form-control" name="Input-name" aria-describedby="nameHelp"value="{{ st.name }}">
           <div id="nameHelp" class="form-text">Edit the Nom.</div>
         </div>
         <div class="mb-3">
           <label for="Input-firstname" class="form-label text-primary">Prénom</label>
-          <input type="text" class="form-control" id="Input-firstname" aria-describedby="firstnameHelp" value="{{ st.first_name }}">
+          <input type="text" class="form-control" name="Input-firstname" aria-describedby="firstnameHelp" value="{{ st.first_name }}">
           <div id="fistnameHelp" class="form-text">Edit the Prénom.</div>
         </div>
         <div class="mb-3">
             <label for="select-nationality" class="form-label text-primary">Nationalité</label>
-            <select class="form-select mb-3" aria-label=".form-select" id="select-nationality">
+            <select class="form-select mb-3" aria-label=".form-select" name="select-nationality">
                 <option selected>Nationalité</option>
                 <option value="FR">France</option>
                 <option value="AU">Autres</option>
@@ -30,11 +31,11 @@
         </div>
         <div class="mb-3">
           <label for="Input-Date" class="form-label text-primary">Date</label>
-          <input type="text" class="form-control" id="Input-Date" value=" {% set x = st.birth_date | string() %}{{ x[:10] }}">
+          <input type="date" class="form-control" name="Input-Date" value=" {{st.birth_date}}">
         </div>
         <div class="mb-3">
           <label for="select-TAF1" class="form-label text-primary">Première TAF</label>
-          <select class="form-select  mb-3" aria-label=".form-select-md" id="select-TAF1" value="{{ st.taf1 }}">
+          <select class="form-select  mb-3" aria-label=".form-select-md" name="select-TAF1" value="{{st.taf1}}">
             <option default disabled>Select option</option>
               {% for tf in taf %}
                 <option value="{{ tf.id }}">{{ tf.name }}</option>
@@ -43,7 +44,7 @@
         </div>
         <div class="mb-3">
           <label for="select-TAF2" class="form-label text-primary">Deuxième TAF</label>
-          <select class="form-select mb-3" aria-label=".form-select" id="select-TAF2" value="{{ st.taf2 }}">
+          <select class="form-select mb-3" aria-label=".form-select" name="select-TAF2" value="{{ st.taf2 }}">
             <option default disabled>Select option</option>
               {% for tf in taf %}
                 <option value="{{ tf.id }}">{{ tf.name }}</option>
