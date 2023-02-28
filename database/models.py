@@ -46,3 +46,5 @@ class Student(db.Model):
     taf1 = db.Column(db.Integer, db.ForeignKey('Taf.id'))
     taf2 = db.Column(db.Integer, db.ForeignKey('Taf.id'))
     stage = db.Column(db.Integer, db.ForeignKey('Stage.id'))
+    promo = db.Column(db.Text)
+    occupation= db.Column(db.Text)
