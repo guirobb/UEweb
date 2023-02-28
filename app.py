@@ -54,7 +54,6 @@ def test():
 
 @app.route('/list/students')
 def students():
-    db_addStudent("Travis", "Willingham", "Anglais", datetime.now(), 0, 1, 0, 2020, "Auto entrepreneur")
     students = Student.query.all()
     print(students)
     return render_template("listStudents.html.jinja2", students=students)
@@ -62,7 +61,6 @@ def students():
 
 @app.route('/list/students/edit')
 def edit_students():
-    create_test_db()
     ident = request.args.get('id', default='*', type=int)
     student = Student.query.filter(Student.id == ident)
     taf = Taf.query.all()
@@ -106,33 +104,27 @@ if __name__ == '__main__':
     app.run()
 
 
-@app.route('/student')
-def affiche_student():
-    promo = request.args.get('student', default='*', type=int)
-    print(promo)
-    student = Student.query.filter(Student.id == promo)
-    return render_template("detailedStudent.html.jinja2", student=student)
 
 
-@app.route("/student/<id>", methods=["DELETE"])
-def deleteStudent(id):
+@app.route("/delete/student/", methods=["POST"])
+def deleteStudent():
+    id = request.form['id']
     db_deleteStudent(id)
     students = Student.query.all()
     print(students)
     return redirect("http://127.0.0.1:5000/list/students")
 
 
-@app.route("/student/<id>", methods=["PUT"])
-def updateStudent(id):
-    first_name = request.json['first_name']
-    name = request.json['name']
-    nationality = request.json['nationality']
-    taf1 = request.json['taf1']
-    taf2 = request.json['taf2']
-    stage = request.json['stage']
-    promo = request.json['promo']
-    occupation = request.json['occupation']
-    db_updateStudent(id, first_name, name, nationality, taf1, taf2, stage, promo, occupation)
+@app.route("/update/student", methods=["POST"])
+def updateStudent():
+    id = request.form['id']
+    first_name = request.form['Input-firstname']
+    name = request.form['Input-name']
+    nationality = request.form['select-nationality']
+    birth_date = request.form["Input-Date"]
+    taf1 = request.form['select-TAF1']
+    taf2 = request.form['select-TAF2']
+    db_updateStudent(id, first_name, name, nationality, taf1, taf2, birth_date)
     return redirect("http://127.0.0.1:5000/list/students")
 
 @app.route('/enterprise')
