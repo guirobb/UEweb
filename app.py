@@ -103,7 +103,7 @@ def affiche_promo():
     print("coucou")
     promo = request.args.get('promo', default='*', type=int)
     print(promo)
-    students = Student.query.filter(Student.promo == promo)
+    students = db.session.query(Student,Promo).join(Promo,Student.promo==Promo.id).filter(Student.promo==promo)
     return render_template("listStudents.html.jinja2", students=students)
 
 
@@ -202,9 +202,9 @@ def addStudent():
     taf1 = request.form['select-TAF1']
     taf2 = request.form['select-TAF2']
     promo = request.form['select-Promo']
-    stage = request.form['select-Stage']
     occupation = request.form['Input-Occupation']
-    db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, stage, promo, occupation)
+    db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, promo, occupation)
+
     return redirect("http://127.0.0.1:5000/list/students")
 
 @app.route("/add/enterprise", methods=["POST"])
