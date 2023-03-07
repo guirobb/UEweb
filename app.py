@@ -121,7 +121,7 @@ def affiche_stage():
     return render_template("listStudents.html.jinja2", students=students)
 
 
-@app.route('admin/internship/new')
+@app.route('/admin/internship/new')
 def new_internship_form():
     return render_template("addInternship.html.jinja2")
 
@@ -189,9 +189,9 @@ def updateEnterprise():
 
 @app.route("/update/taf", methods=["POST"])
 def updateTaf():
-    id = request.form['id']
-    name = request.form['Input-name']
-    director = request.form["Input-Director"]
+    id = request.json['id']
+    name = request.json['name']
+    director = request.json["responsable"]
     db_updateTaf(id, name, director)
     return redirect("http://127.0.0.1:5000/list/students")
 

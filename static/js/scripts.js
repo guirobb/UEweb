@@ -29,7 +29,7 @@ function saveChanges(ident){
     let el6 = document.getElementById(`discardEdit_btn-${ident}`);
     let el7 = document.getElementById(`labelTaf_director-${ident}`);
     let el8 = document.getElementById(`editTafInput_director-${ident}`);
-
+    var responsable = "rr";
     el.classList.add("hidden");
     console.log(el2.innerText);
     el2.innerText=el.getElementsByClassName("form-control")[0].value;
@@ -40,10 +40,17 @@ function saveChanges(ident){
     el6.classList.add("hidden");
     el7 != undefined ? el7.classList.remove("hidden") : false;
     el8 != undefined ? el8.classList.add("hidden") : false;
+    if (el8===undefined) {
+
+    }
+    else {
+        responsable=el8.getElementsByClassName("form-control")[0].value;
+        el7.innerText= el8.getElementsByClassName("form-control")[0].value;
+    }
 
 
     let xhr = new XMLHttpRequest();
-    let url = "../../update/enterprise";
+    let url = "../../update/taf";
 
     // open a connection
     xhr.open("POST", url, true);
@@ -59,7 +66,7 @@ function saveChanges(ident){
     };
 
     // Converting JSON data to string
-    var data = JSON.stringify({ "id": ident, "name": el.getElementsByClassName("form-control")[0].value});
+    var data = JSON.stringify({ "id": ident, "name": el.getElementsByClassName("form-control")[0].value, "responsable": responsable});
 
     // Sending data with the request
     xhr.send(data);
