@@ -3,7 +3,7 @@ html body{
     color: #2b2b2b !important;
 }
 
-.card:hover {
+.hover:hover {
 
   box-shadow: 5px 6px 6px 2px #e9ecef62;
   transform: scale(1.01);
@@ -21,6 +21,10 @@ html body{
 
 .border_bottom-rounded{
     border-radius: 0px 0px 15px 15px !important;
+}
+
+.border-rounded{
+    border-radius: 15px !important;
 }
 
 .no-border{
@@ -53,4 +57,59 @@ html body{
 
 .hidden{
     display: none !important;
+}
+
+.icon {
+    min-width: 50px;
+    text-align: center;
+}
+
+.input-container {
+    display: flex;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+}
+
+.wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    font-weight: bold;
+    text-align: center;
+}
+
+.main {
+    flex: 3 0px;
+}
+
+.icon-start {
+    order: 1;
+    align-self: center;
+    font-size: 30px;
+    margin-right: 1rem;
+}
+
+.main {
+    order: 2;
+}
+
+.form-label-left{
+    width: 100%;
+    text-align: left;
+    font-weight: normal;
+}
+
+.badge-lg{
+    font-size: 14px !important;
+    padding: 8px !important;
+}
+
+.badge-icon{
+    margin-right: 0.2rem !important;
+    font-size: 17px !important;
 }
