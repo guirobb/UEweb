@@ -4,7 +4,8 @@
 {% block body %}
 <div class="container p-3">
 
- <nav aria-label="breadcrumb" class="main-breadcrumb">
+    <h1 class="text-dark"><strong>Listes entreprises</strong></h1>
+     <nav aria-label="breadcrumb" class="main-breadcrumb mx-3">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="./">Home</a></li>
           <li class="breadcrumb-item"><a href="javascript:void(0)">Listes entreprises</a></li>
@@ -12,31 +13,45 @@
       </nav>
 
 
-    <div class="card p-3" style="border: none; border-radius: 11px;">
+    <div class="card p-5" style="border: none; border-radius: 15px;">
 
-            <table class="table  table-hover">
+            <table class="table table-hover text-center">
                 <thead>
                     <tr>
-                        <th></th>
-                        <th>Nom</th>
-                        <th>Actions</th>
+                        <th style="width:3%">ID</th>
+                        <th style="width:75%">Nom</th>
+                        <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for company in companies %}
                     <tr>
-                      <th scope="row">{{ company.id }}</th>
-                      <td>{{ company.name }}</td>
-                      <td>
-                          <a class="btn btn-light btn-sm btn-block text-primary" >
-                              <i class="bi bi-pencil-fill"></i>
-                              <strong>Edit</strong>
-                          </a>
-                          <a class="btn btn-light btn-sm btn-block text-danger" >
-                              <i class="bi bi-trash"></i>
-                              <strong>Delete</strong>
-                          </a>
-                      </td>
+                        <th scope="row">{{ company.id }}</th>
+                        <td id="label_name-{{ company.id }}">{{ company.name }}</td>
+                        <td id="edit_name-{{ company.id }}" class="hidden">
+                            <input type="text" class="form-control"  aria-describedby="Input_Enterprise-{{ company.id }}_help" value="{{ company.name }}">
+                        </td>
+                        <td>
+                            <a id="edit_btn-{{ company.id }}"  class="btn btn-white btn-md btn-block text-primary" onclick="enableEditCompany('{% set iid = company.id | string() %}{{ iid }}', '{% set nameCompany = company.name | string() %}{{ nameCompany }}')" >
+                                <i class="bi bi-pencil-fill"></i>
+                                <strong>Edit</strong>
+                            </a>
+                            <a id="delete_btn-{{ company.id }}"  class="btn btn-white btn-md btn-block text-secondary" >
+                                <i class="bi bi-trash"></i>
+                                <strong>Delete</strong>
+                            </a>
+
+
+                            <a id="save_btn-{{ company.id }}" class="btn btn-white btn-md btn-block text-success hidden" onclick="saveChangesCompany('{% set iid = company.id | string() %}{{ iid }}')" >
+                                <i class="bi bi-save2-fill"></i>
+                                <strong>Save</strong>
+                            </a>
+                            <a id="discardEditCompany_btn-{{ company.id }}" class="btn btn-white btn-md btn-block text-secondary hidden"
+                                onclick="saveChangesCompany('{% set iid = company.id | string() %}{{ iid }}')">
+                                <i class="bi bi-x-lg"></i>
+                                <strong>Discard</strong>
+                            </a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
