@@ -4,13 +4,13 @@ from datetime import datetime
 
 def db_updateStudent(id, first_name, name, nationality, taf1, taf2, birth_date):
     print("db_updateStudent")
-    student = Student.query.get(id)
+    student = User.query.get(id)
     student.first_name = first_name
     student.name = name
     student.nationality = nationality
-    if (birth_date!="") :
+    if birth_date != "":
         birth_date2 = datetime.strptime(birth_date,
-                                   '%Y-%m-%d')
+                                        '%Y-%m-%d')
         student.birth_date = birth_date2
     student.taf1 = taf1
     student.taf2 = taf2
@@ -28,6 +28,17 @@ def db_updateTaf(id, name, director):
 
 def db_updateEnterprise(id, name):
     print("db_updateEnterprise")
-    enterprise = Enterprise.query.get(id)
+    enterprise = Organisation.query.get(id)
     enterprise.name = name
+    db.session.commit()
+
+
+def db_updateOccupation(id, title, description, start_date, organisation):
+    occupation = Occupation.query.get(id)
+    occupation.title = title
+    occupation.description = description
+    if start_date != "":
+        start_date2 = datetime.strptime(start_date, '%Y-%m-%d')
+        occupation.start_date = start_date2
+    occupation.organisation = organisation
     db.session.commit()

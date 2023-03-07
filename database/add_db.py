@@ -5,9 +5,9 @@ from datetime import datetime
 def db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, stage, promo, occupation):
     birth_date2 = datetime.strptime(birth_date,
                                     '%Y-%m-%d')
-    student = Student(first_name=first_name, name=name, nationality=nationality, birth_date=birth_date2, taf1=taf1,
-                      taf2=taf2,
-                      stage=stage, promo=promo, occupation=occupation)
+    student = User(first_name=first_name, name=name, nationality=nationality, birth_date=birth_date2, taf1=taf1,
+                   taf2=taf2,
+                   stage=stage, promo=promo, occupation=occupation, role="user")
     print(student)
     db.session.add(student)
     print(db.session.commit())
@@ -22,7 +22,7 @@ def db_addTaf(name, director):
 
 def db_addEnterprise(name):
     print("db_addEnterprise")
-    db.session.add(Enterprise(name=name))
+    db.session.add(Organisation(name=name))
     db.session.commit()
 
 
@@ -34,8 +34,16 @@ def db_addStage(title, date_start, date_end, resume, rapport, tutor, enterprise)
               enterprise=enterprise))
     db.session.commit()
 
-def db_addTutor(name,first_name,number,mail,enterprise) :
+
+def db_addTutor(name, first_name, number, mail, enterprise):
     db.session.add(
         Tutor(name=name, first_name=first_name, number=number, mail=mail, enterprise=enterprise)
     )
+    db.session.commit()
+
+
+def db_addOccupation(title, description, start_date, id_user, organisation):
+    start_date2 = datetime.strptime(start_date, '%Y-%m-%d')
+    db.session.add(Occupation(title=title, description=description, start_date=start_date2, id_user=id_user,
+                              organisation=organisation))
     db.session.commit()

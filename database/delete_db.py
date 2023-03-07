@@ -13,12 +13,18 @@ def db_deleteTaf(id) :
 #@app.route("/enterprise/<id>", methods=["DELETE"])
 def db_deleteEnterprise(id) :
     print("db_deleteEnterprise")
-    student = Enterprise.query.get(id)
+    student = Organisation.query.get(id)
     db.session.delete(student)
     db.session.commit()
 
 def db_deleteStudent(id) :
     print("db_deleteStudent")
-    student = Student.query.get(id)
+    student = User.query.get(id)
     db.session.delete(student)
+    db.session.commit()
+
+def db_deleteOccupation(id):
+    print("db_deleteOccupation")
+    occupation = Occupation.query.get(id)
+    db.session.delete(occupation)
     db.session.commit()
