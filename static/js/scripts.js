@@ -25,9 +25,33 @@ function saveChangesCompany(ident){
     let el6 = document.getElementById(`discardEditCompany_btn-${ident}`);
 
     el.classList.add("hidden");
+    console.log(el2.innerText);
+    el2.innerText=el.getElementsByClassName("form-control")[0].value;
     el2.classList.remove("hidden");
     el3.classList.add("hidden");
     el4.classList.remove("hidden");
     el5.classList.remove("hidden");
     el6.classList.add("hidden");
+
+    let xhr = new XMLHttpRequest();
+    let url = "../../update/enterprise";
+
+    // open a connection
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    // Create a state change callback
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+
+            // Print received data from server
+
+        }
+    };
+
+    // Converting JSON data to string
+    var data = JSON.stringify({ "id": ident, "name": el.getElementsByClassName("form-control")[0].value});
+
+    // Sending data with the request
+    xhr.send(data);
 }
