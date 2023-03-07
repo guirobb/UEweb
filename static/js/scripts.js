@@ -100,3 +100,8 @@ function deleteStudent(id) {
     xhr.send(data);
     el.classList.add("hidden");
 }
+
+function verifyStudent(student,filter) {
+    return (student.taf1==filter.taf)
+}
+

@@ -46,8 +46,8 @@ def list_all_tutors():
 
 
 def list_all_companies():
-    print(Enterprise.query.all())
-    return Enterprise.query.all()
+    print(Organisation.query.all())
+    return Organisation.query.all()
 
 
 @app.route('/')
@@ -73,9 +73,11 @@ def students():
     students = db.session.query(User, Promo).join(Promo, User.promo == Promo.id).all()
     print(students[0][0])
     for student in students :
-        occupations = Occupation.query.filter(Occupation.id_user==student.id)
-
-    return render_template("listStudents.html.jinja2", students=students, tafs=taf)
+        occupations = Occupation.query.filter(Occupation.id_user==student[0].id)
+    taf = Taf.query.all()
+    num= len(students)
+    promos = Promo.query.all()
+    return render_template("listStudents.html.jinja2", students=students, taf=taf, filter= Filter(), num= num,promos=promos)
 
 
 @app.route('/list/students/edit')
@@ -141,9 +143,9 @@ def affiche_stage():
 @app.route('/admin/internship/new')
 def new_internship_form():
     ident = request.args.get('studentId', default='*', type=int)
-    student = Student.query.filter(Student.id == ident)
+    student = User.query.filter(User.id == ident)
     return render_template("addInternship.html.jinja2", tutors=list_all_tutors(),
-                           companies=list_all_companies(), students=student)
+                           companies=list_all_companies(), students=student, ident=ident)
 
 
 @app.route('/taf')
@@ -237,22 +239,21 @@ def addStudent():
     occupation = request.form['Input-Occupation']
     db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, 0, promo, occupation)
     student = User.query.filter(User.first_name == first_name, User.name == name, User.taf1 == taf1, User.taf2 == taf2)
-    return redirect("http://127.0.0.1:5000/create/stage?id="+str(student[0].id))
+    return redirect("http://127.0.0.1:5000/admin/internship/new?studentId="+str(student[0].id))
 
 @app.route("/add/stage", methods=["POST"])
 def addStage():
-    student_id = request.form['student_id']
-    title = request.form['title']
-    date_start = request.form['date_start']
-    date_end = request.form['date_end']
-    resume = request.form['resume']
-    rapport = request.form['rapport']
-    tutor = request.form['tutor']
-    enterprise = request.form['enterprise']
+    title = request.form["Input-nameStage"]
+    date_start = request.form["Input-date-start"]
+    date_end = request.form["Input-date-end"]
+    resume = request.form["Input-resumeStage"]
+    rapport = request.form["Input-reportStage"]
+    tutor = request.form["select-tutor"]
+    enterprise = request.form["select-enterprise"]
     db_addStage(title, date_start, date_end, resume, rapport, tutor, enterprise)
-    stage = Stage.query.filter(title=title, date_start=date_start, date_end=date_end, resume=resume)
-    student = User.query.filter(id=student_id)
-    student.stage = stage.id
+    stage = Stage.query.all()
+    student = User.query.all()
+    student[len(student)-1].stage = stage[len(stage)-1].id
     db.session.commit()
     return redirect("http://127.0.0.1:5000/list/students")
 
