@@ -1,1 +1,17 @@
 {% extends "layout.html.jinja2" %}
+{% block body %}
+<div class="container">
+<div class="card"
+<p>Prénom : {{ student.first_name }} </p>
+<p>Nom: {{ student.name }}</p>
+    <p>Promo : {{ promo.annee }}</p>
+<p>Poste actuel: {{ student.occupation }}</p>
+<p>Taf 1 : {{ taf1.name }}</p>
+<p>Taf 2 : {{ taf2.name }}</p>
+<p>Intitulé de Stage: {{ stage.title }}</p>
+<p>Résumé : {{ stage.resume }}</p>
+    {% for occupation in occupations %}
+        <p>{{ occupation.title }}</p>
+        <p>{{ occupation.start_date }}
+    {% endfor %}
+{% endblock %}
