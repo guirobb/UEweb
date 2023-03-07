@@ -2,76 +2,96 @@
 
 {% block body %}
     <div class="container">
+
+    <h1 class="text-dark text-center mt-4"><strong>Créer nouveau stage</strong></h1>
    <div class="row g-0 align-items-center">
-    <div class="col-md-4 pt-3 text-center">
-        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" style="border-radius:50%; width:250px; weight:250px;" class="img-fluid">
-        <h1 class="mt-1"><strong></strong> </h1>
+    <div class="col-md-2 pt-3 text-center">
     </div>
     <div class="col-md-8 p-3">
-      <form action="http://127.0.0.1:5000/add/student" method="post">
-        <div class="mb-3">
-          <label for="Input-name" class="form-label text-primary">Nom</label>
-          <input type="text" class="form-control" name="Input-name" aria-describedby="nameHelp">
-          <div id="nameHelp" class="form-text">Add the Nom.</div>
+    <div class="card p-5 no-border border-rounded " >
+        <form action="http://127.0.0.1:5000/add/stage" method="post">
+        <div class="text-center col-12 mb-5">
+            {% for user in students %}
+            <span style="font-size: 17px;">Nouvel élève: </span>
+            <span class="badge rounded-pill text-bg-primary badge-lg">
+                <i class="bi bi-person-circle badge-icon"></i>
+                <b style="margin-top:0%;">{{user.first_name}} {{user.name}}</b> 
+            </span>
+            {% endfor %}
         </div>
-        <div class="mb-3">
-          <label for="Input-firstname" class="form-label text-primary">Prénom</label>
-          <input type="text" class="form-control" name="Input-firstname" aria-describedby="firstnameHelp">
-          <div id="fistnameHelp" class="form-text">Add the Prénom.</div>
+        <div class="mb-5 wrapper">
+          <i class="bi bi-person-workspace icon text-primary icon-start"></i>
+          <div class="main">
+            <label for="Input-nameStage" class="form-label form-label-left text-primary">Titre du stage</label>
+            <input type="text" class="form-control" name="Input-nameStage" aria-describedby="nameHelp">
+            <div id="nameHelp" class="form-text"></div>
+          </div>
         </div>
-        <div class="mb-3">
-            <label for="select-nationality" class="form-label text-primary">Nationalité</label>
-            <select class="form-select mb-3" aria-label=".form-select" name="select-nationality">
-                <option selected>Nationalité</option>
-                <option value="FR">France</option>
-                <option value="AU">Autres</option>
+
+        <div class="row">
+          <div class="col-sm-6 mb-5 wrapper">
+            <i class="bi bi-calendar3 icon text-primary icon-start"></i>
+            <div class="main">
+              <label for="Input-date-start" class="form-label text-primary form-label-left">Début</label>
+              <input type="date" class="form-control" name="Input-date-start" aria-describedby="dateStartHelp">
+              <div id="dateStartHelp" class="form-text"></div>
+            </div>
+          </div>
+          <div class="col-sm-6 mb-5 wrapper">
+            <i class="bi bi-calendar3 icon text-primary icon-start"></i>
+            <div class="main">
+              <label for="Input-date-end" class="form-label text-primary form-label-left">Fin</label>
+              <input type="date" class="form-control" name="Input-date-end" aria-describedby="dateEndHelp">
+              <div id="dateEndHelp" class="form-text"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-5 wrapper">
+          <i class="bi bi-card-text icon text-primary icon-start"></i>
+          <div class="main">
+            <label for="Input-resumeStage" class="form-label form-label-left text-primary">Resume</label>
+            <textarea type="text" class="form-control" name="Input-resumeStage" style="height:150px;" aria-describedby="resumeHelp"></textarea>
+            <div id="resumeHelp" class="form-text"></div>
+          </div>
+        </div>
+
+        <div class="mb-5 wrapper">
+          <i class="bi bi-ui-checks icon text-primary icon-start"></i>
+          <div class="main">
+            <label for="Input-reportStage" class="form-label form-label-left text-primary">Rapport</label>
+            <textarea type="text" class="form-control" name="Input-reportStage" style="height:80px;"
+              aria-describedby="reportHelp"></textarea>
+            <div id="reportHelp" class="form-text"></div>
+          </div>
+        </div>
+
+        <div class="mb-5 wrapper">
+          <i class="bi bi-person-video2 icon text-primary icon-start"></i>
+          <div class="main">
+            <label for="select-tutor" class="form-label text-primary form-label-left">Tuteur</label>
+            <select class="form-select mb-3" aria-label=".form-select" name="select-tutor">
+              <option default disabled selected>Sélectionner</option>
+              {% for tutor in tutors %}
+              <option value="{{ tutor.id }}">{{ tutor.name.upper() }} {{ tutor.first_name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+          <div class="mb-5 wrapper">
+            <i class="bi bi-buildings icon text-primary icon-start"></i>
+            <div class="main">
+              <label for="select-enterprise" class="form-label text-primary form-label-left">Entreprise</label>
+              <select class="form-select mb-3" aria-label=".form-select" name="select-enterprise">
+                <option default disabled selected>Sélectionner</option>
+                {% for enterprise in companies %}
+                <option value="{{ enterprise.id }}">{{enterprise.id}} - {{ enterprise.name.upper() }}</option>
+                {% endfor %}
               </select>
-        </div>
-        <div class="mb-3">
-          <label for="Input-Date" class="form-label text-primary">Date</label>
-          <input type="date" class="form-control" name="Input-Date">
-        </div>
-        <div class="mb-3">
-          <label for="select-TAF1" class="form-label text-primary">Première TAF</label>
-          <select class="form-select  mb-3" aria-label=".form-select-md" name="select-TAF1">
-            <option default disabled>Select option</option>
-              {% for tf in taf %}
-                <option value="{{ tf.id }}">{{ tf.name }}</option>
-              {% endfor %}
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="select-TAF2" class="form-label text-primary">Deuxième TAF</label>
-          <select class="form-select mb-3" aria-label=".form-select" name="select-TAF2">
-            <option default disabled>Select option</option>
-              {% for tf in taf %}
-                <option value="{{ tf.id }}">{{ tf.name }}</option>
-              {% endfor %}
-          </select>
-        </div>
-      <div class="mb-3">
-          <label for="select-TAF1" class="form-label text-primary">Stage</label>
-          <select class="form-select  mb-3" aria-label=".form-select-md" name="select-Stage">
-            <option default disabled>Select option</option>
-              {% for stage in stages %}
-                <option value="{{ stage.id }}">{{ stage.title }}</option>
-              {% endfor %}
-          </select>
-        </div>
-      <div class="mb-3">
-          <label for="select-TAF1" class="form-label text-primary">Promo</label>
-          <select class="form-select  mb-3" aria-label=".form-select-md" name="select-Promo" >
-            <option default disabled>Select option</option>
-              {% for promo in promos %}
-                <option value="{{ promo.id }}">{{ promo.annee }}</option>
-              {% endfor %}
-          </select>
-        </div>
-      <div class="mb-3">
-          <label for="Input-firstname" class="form-label text-primary">Poste actuel</label>
-          <input type="text" class="form-control" name="Input-Occupation" aria-describedby="firstnameHelp" >
-          <div id="fistnameHelp" class="form-text">Edit the Prénom.</div>
-        </div>
+            </div>
+          </div>
+      
         <div class="mb-3 form-check">
           <input type="checkbox" class="form-check-input" id="exampleCheck1">
           <label class="form-check-label" for="exampleCheck1">Check me out</label>
@@ -81,6 +101,10 @@
           <button type="submit" class="btn btn-primary btn-md" >Save chages</button>
         </div>
       </form>
+
+
+    </div>
+
     </div>
     </div>
     </div>

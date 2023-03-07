@@ -9,11 +9,12 @@ from database.init_db import *
 from database.add_db import *
 from database.delete_db import *
 from database.update_db import *
-#from flask_cors import CORS
+
+# from flask_cors import CORS
 
 
 app = Flask(__name__)
-#CORS(app)
+# CORS(app)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "secret_key1234"
 
@@ -34,6 +35,19 @@ def clean():
     db.drop_all()
     db.create_all()
     return "Cleaned!"
+
+
+def list_all_students():
+    return Student.query.all()
+
+
+def list_all_tutors():
+    return Tutor.query.all()
+
+
+def list_all_companies():
+    print(Enterprise.query.all())
+    return Enterprise.query.all()
 
 
 @app.route('/')
@@ -92,8 +106,7 @@ def edit_taf():
 
 @app.route('/admin/companies/list')
 def list_company():
-    companies = Enterprise.query.all()
-    return render_template("listEnterprises.html.jinja2", companies=companies)
+    return render_template("listEnterprises.html.jinja2", companies=list_all_companies())
 
 
 @app.route('/admin/company/edit')
@@ -121,9 +134,12 @@ def affiche_stage():
     return render_template("listStudents.html.jinja2", students=students)
 
 
-@app.route('admin/internship/new')
+@app.route('/admin/internship/new')
 def new_internship_form():
-    return render_template("addInternship.html.jinja2")
+    ident = request.args.get('studentId', default='*', type=int)
+    student = Student.query.filter(Student.id == ident)
+    return render_template("addInternship.html.jinja2", tutors=list_all_tutors(),
+                           companies=list_all_companies(), students=student)
 
 
 @app.route('/taf')
@@ -183,7 +199,7 @@ def updateEnterprise():
     print(request.json)
     id = request.json['id']
     name = request.json['name']
-    db_updateEnterprise(id, name,)
+    db_updateEnterprise(id, name, )
     return redirect("http://127.0.0.1:5000/admin/companies/list")
 
 
@@ -216,11 +232,12 @@ def addStudent():
     promo = request.form['select-Promo']
     occupation = request.form['Input-Occupation']
     db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, 0, promo, occupation)
-    student = Student.query.filter(first_name = first_name, name = name, taf1= taf1, taf2=taf2)
-    return redirect("http://127.0.0.1:5000/create/stage?id="+student.id)
+    student = Student.query.filter(first_name=first_name, name=name, taf1=taf1, taf2=taf2)
+    return redirect("http://127.0.0.1:5000/create/stage?id=" + student.id)
 
-@app.route("/add/stage", methods = ["POST"])
-def addStage() :
+
+@app.route("/add/stage", methods=["POST"])
+def addStage():
     student_id = request.form['student_id']
     title = request.form['title']
     date_start = request.form['date_start']
