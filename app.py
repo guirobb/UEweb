@@ -118,6 +118,11 @@ def affiche_stage():
     return render_template("listStudents.html.jinja2", students=students)
 
 
+@app.route('admin/internship/new')
+def new_internship_form():
+    return render_template("addInternship.html.jinja2")
+
+
 @app.route('/taf')
 def affiche_taf():
     promo = request.args.get('taf', default='*', type=str)
