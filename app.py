@@ -9,11 +9,12 @@ from database.init_db import *
 from database.add_db import *
 from database.delete_db import *
 from database.update_db import *
-#from flask_cors import CORS
+
+# from flask_cors import CORS
 
 
 app = Flask(__name__)
-#CORS(app)
+# CORS(app)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "secret_key1234"
 
@@ -34,6 +35,19 @@ def clean():
     db.drop_all()
     db.create_all()
     return "Cleaned!"
+
+
+def list_all_students():
+    return Student.query.all()
+
+
+def list_all_tutors():
+    return Tutor.query.all()
+
+
+def list_all_companies():
+    print(Enterprise.query.all())
+    return Enterprise.query.all()
 
 
 @app.route('/')
@@ -126,7 +140,10 @@ def affiche_stage():
 
 @app.route('/admin/internship/new')
 def new_internship_form():
-    return render_template("addInternship.html.jinja2")
+    ident = request.args.get('studentId', default='*', type=int)
+    student = Student.query.filter(Student.id == ident)
+    return render_template("addInternship.html.jinja2", tutors=list_all_tutors(),
+                           companies=list_all_companies(), students=student)
 
 
 @app.route('/taf')
@@ -186,7 +203,7 @@ def updateEnterprise():
     print(request.json)
     id = request.json['id']
     name = request.json['name']
-    db_updateEnterprise(id, name,)
+    db_updateEnterprise(id, name, )
     return redirect("http://127.0.0.1:5000/admin/companies/list")
 
 
@@ -222,8 +239,8 @@ def addStudent():
     student = User.query.filter(User.first_name == first_name, User.name == name, User.taf1 == taf1, User.taf2 == taf2)
     return redirect("http://127.0.0.1:5000/create/stage?id="+str(student[0].id))
 
-@app.route("/add/stage", methods = ["POST"])
-def addStage() :
+@app.route("/add/stage", methods=["POST"])
+def addStage():
     student_id = request.form['student_id']
     title = request.form['title']
     date_start = request.form['date_start']
