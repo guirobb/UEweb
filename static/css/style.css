@@ -113,3 +113,16 @@ html body{
     margin-right: 0.2rem !important;
     font-size: 17px !important;
 }
+
+.ts-control{
+    border: none !important;
+    padding: 4px !important;
+    font-size: 1rem !important;
+   
+}
+
+.ts-control input{
+            font-size: 1rem;
+            color: black;
+       
+}
