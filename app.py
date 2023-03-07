@@ -17,8 +17,8 @@ app.config["SECRET_KEY"] = "secret_key1234"
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database/database.db"
 # db_path = os.path.join(os.path.dirname(__file__), 'database/database.db')
 # db_uri = 'sqlite:///{}'.format(db_path)
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///C:\\Users\\carlos\\Repos\\IMT2022\\WEB\\UEweb\\database/database.db'
-# app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///C:\\Users\\guill\\PycharmProjects\\flaskProject1\\database/database.db'
+# app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///C:\\Users\\carlos\\Repos\\IMT2022\\WEB\\UEweb\\database/database.db'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///C:\\Users\\guill\\PycharmProjects\\flaskProject1\\database/database.db'
 
 db.init_app(app)
 with app.test_request_context():  # (2) bloc exécuté à l'initialisation de Flask
@@ -53,8 +53,8 @@ def test():
 
 @app.route('/list/students')
 def students():
-    students = Student.query.all()
-    print(students)
+    students = db.session.query(Student,Promo).join(Promo,Student.promo==Promo.id).all()
+    print(students[0][0])
     return render_template("listStudents.html.jinja2", students=students)
 
 
@@ -65,6 +65,12 @@ def edit_students():
     taf = Taf.query.all()
     return render_template("edituser.html.jinja2", student=student, taf=taf)
 
+@app.route('/list/students/add')
+def create_students():
+    taf = Taf.query.all()
+    stage = Stage.query.all()
+    promo = Promo.query.all()
+    return render_template("addStudent.html.jinja2", taf=taf, stages=stage, promos=promo)
 
 @app.route('/admin/taf/list')
 def list_Taf():
@@ -132,6 +138,7 @@ if __name__ == '__main__':
 @app.route("/delete/student/", methods=["POST"])
 def deleteStudent():
     id = request.form['id']
+    print(id)
     db_deleteStudent(id)
     return redirect("http://127.0.0.1:5000/list/students")
 
@@ -196,7 +203,7 @@ def addStudent():
     taf2 = request.form['select-TAF2']
     promo = request.form['select-Promo']
     stage = request.form['select-Stage']
-    occupation = request.form['Input-Stage']
+    occupation = request.form['Input-Occupation']
     db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, stage, promo, occupation)
     return redirect("http://127.0.0.1:5000/list/students")
 

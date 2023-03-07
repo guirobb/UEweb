@@ -35,6 +35,10 @@ class Stage(db.Model):
     tutor = db.Column(db.Integer, db.ForeignKey('Tutor.id'))
     enterprise = db.Column(db.Integer, db.ForeignKey('Enterprise.id'))
 
+class Promo(db.Model):
+    __tablename__ = "Promo"
+    id = db.Column(db.Integer, primary_key=True)
+    annee = db.Column(db.Integer)
 
 class Student(db.Model):
     __tablename__ = "Student"
@@ -46,5 +50,6 @@ class Student(db.Model):
     taf1 = db.Column(db.Integer, db.ForeignKey('Taf.id'))
     taf2 = db.Column(db.Integer, db.ForeignKey('Taf.id'))
     stage = db.Column(db.Integer, db.ForeignKey('Stage.id'))
-    promo = db.Column(db.Integer)
+    promo = db.Column(db.Integer, db.ForeignKey('Promo.id'))
     occupation= db.Column(db.Text)
+
