@@ -145,7 +145,7 @@ if __name__ == '__main__':
 
 @app.route("/delete/student/", methods=["POST"])
 def deleteStudent():
-    id = request.form['id']
+    id = request.json['id']
     print(id)
     db_deleteStudent(id)
     return redirect("http://127.0.0.1:5000/list/students")
@@ -216,8 +216,8 @@ def addStudent():
     promo = request.form['select-Promo']
     occupation = request.form['Input-Occupation']
     db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, 0, promo, occupation)
-    student = Student.query.filter(first_name = first_name, name = name, taf1= taf1, taf2=taf2)
-    return redirect("http://127.0.0.1:5000/create/stage?id="+student.id)
+    student = Student.query.filter(Student.first_name == first_name, Student.name == name, Student.taf1 == taf1, Student.taf2 == taf2)
+    return redirect("http://127.0.0.1:5000/create/stage?id="+str(student[0].id))
 
 @app.route("/add/stage", methods = ["POST"])
 def addStage() :

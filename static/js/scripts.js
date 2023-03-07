@@ -72,3 +72,31 @@ function saveChanges(ident){
     xhr.send(data);
 
 }
+
+function deleteStudent(id) {
+    console.log(id);
+    let el = document.getElementById(`student-${id}`);
+
+    let xhr = new XMLHttpRequest();
+    let url = "../../delete/student";
+
+    // open a connection
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    // Create a state change callback
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+
+            // Print received data from server
+
+        }
+    };
+
+    // Converting JSON data to string
+    var data = JSON.stringify({ "id": id});
+
+    // Sending data with the request
+    xhr.send(data);
+    el.classList.add("hidden");
+}
