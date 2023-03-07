@@ -203,8 +203,25 @@ def addStudent():
     taf2 = request.form['select-TAF2']
     promo = request.form['select-Promo']
     occupation = request.form['Input-Occupation']
-    db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, promo, occupation)
+    db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, 0, promo, occupation)
+    student = Student.query.filter(first_name = first_name, name = name, taf1= taf1, taf2=taf2)
+    return redirect("http://127.0.0.1:5000/create/stage?id="+student.id)
 
+@app.route("/add/stage", methods = ["POST"])
+def addStage() :
+    student_id = request.form['student_id']
+    title = request.form['title']
+    date_start = request.form['date_start']
+    date_end = request.form['date_end']
+    resume = request.form['resume']
+    rapport = request.form['rapport']
+    tutor = request.form['tutor']
+    enterprise = request.form['enterprise']
+    db_addStage(title, date_start, date_end, resume, rapport, tutor, enterprise)
+    stage = Stage.query.filter(title=title, date_start=date_start, date_end=date_end, resume=resume)
+    student = Student.query.filter(id=student_id)
+    student.stage = stage.id
+    db.session.commit()
     return redirect("http://127.0.0.1:5000/list/students")
 
 @app.route("/add/enterprise", methods=["POST"])
