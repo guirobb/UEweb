@@ -9,8 +9,11 @@ from database.init_db import *
 from database.add_db import *
 from database.delete_db import *
 from database.update_db import *
+#from flask_cors import CORS
+
 
 app = Flask(__name__)
+#CORS(app)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "secret_key1234"
 
@@ -170,10 +173,11 @@ def updateStudent():
 
 @app.route("/update/enterprise", methods=["POST"])
 def updateEnterprise():
-    id = request.form['id']
-    name = request.form['Input-name']
+    print(request.json)
+    id = request.json['id']
+    name = request.json['name']
     db_updateEnterprise(id, name,)
-    return redirect("http://127.0.0.1:5000/list/students")
+    return redirect("http://127.0.0.1:5000/admin/companies/list")
 
 @app.route("/update/taf", methods=["POST"])
 def updateTaf():
