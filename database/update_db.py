@@ -9,7 +9,7 @@ def db_updateStudent(id, first_name, name, nationality, taf1, taf2, birth_date):
     student.name = name
     student.nationality = nationality
     if (birth_date!="") :
-        birth_date2 = datetime.strptime(request.form["Input-Date"],
+        birth_date2 = datetime.strptime(birth_date,
                                    '%Y-%m-%d')
         student.birth_date = birth_date2
     student.taf1 = taf1
