@@ -56,7 +56,7 @@ def test():
 
 @app.route('/list/students')
 def students():
-    students = db.session.query(Student,Promo).join(Promo,Student.promo==Promo.id).all()
+    students = db.session.query(Student, Promo).join(Promo, Student.promo == Promo.id).all()
     print(students[0][0])
     return render_template("listStudents.html.jinja2", students=students)
 
@@ -68,6 +68,7 @@ def edit_students():
     taf = Taf.query.all()
     return render_template("edituser.html.jinja2", student=student, taf=taf)
 
+
 @app.route('/list/students/add')
 def create_students():
     taf = Taf.query.all()
@@ -75,10 +76,11 @@ def create_students():
     promo = Promo.query.all()
     return render_template("addStudent.html.jinja2", taf=taf, stages=stage, promos=promo)
 
+
 @app.route('/admin/taf/list')
 def list_Taf():
-    ListTaf = Taf.query.all()
-    return render_template("listTaf.html.jinja2", listTaf=ListTaf)
+    list_taf = Taf.query.all()
+    return render_template("listTaf.html.jinja2", listTaf=list_taf)
 
 
 @app.route('/admin/taf/edit')
@@ -106,7 +108,7 @@ def affiche_promo():
     print("coucou")
     promo = request.args.get('promo', default='*', type=int)
     print(promo)
-    students = db.session.query(Student,Promo).join(Promo,Student.promo==Promo.id).filter(Student.promo==promo)
+    students = db.session.query(Student, Promo).join(Promo, Student.promo == Promo.id).filter(Student.promo == promo)
     return render_template("listStudents.html.jinja2", students=students)
 
 
@@ -117,6 +119,11 @@ def affiche_stage():
     print(promo)
     students = Student.query.filter(Student.stage == promo)
     return render_template("listStudents.html.jinja2", students=students)
+
+
+@app.route('admin/internship/new')
+def new_internship_form():
+    return render_template("addInternship.html.jinja2")
 
 
 @app.route('/taf')
@@ -136,8 +143,6 @@ if __name__ == '__main__':
     app.run()
 
 
-
-
 @app.route("/delete/student/", methods=["POST"])
 def deleteStudent():
     id = request.form['id']
@@ -145,11 +150,13 @@ def deleteStudent():
     db_deleteStudent(id)
     return redirect("http://127.0.0.1:5000/list/students")
 
+
 @app.route("/delete/enterprise/", methods=["POST"])
 def deleteEnterprise():
     id = request.form['id']
     db_deleteEnterprise(id)
     return redirect("http://127.0.0.1:5000/list/students")
+
 
 @app.route("/delete/taf/", methods=["POST"])
 def deleteTaf():
@@ -178,6 +185,7 @@ def updateEnterprise():
     name = request.json['name']
     db_updateEnterprise(id, name,)
     return redirect("http://127.0.0.1:5000/admin/companies/list")
+
 
 @app.route("/update/taf", methods=["POST"])
 def updateTaf():
@@ -228,11 +236,13 @@ def addStage() :
     db.session.commit()
     return redirect("http://127.0.0.1:5000/list/students")
 
+
 @app.route("/add/enterprise", methods=["POST"])
 def addEnterprise():
     name = request.form['Input-name']
     db_addEnterprise(name)
     return redirect("http://127.0.0.1:5000/list/students")
+
 
 @app.route("/add/taf", methods=["POST"])
 def addTaf():
@@ -240,4 +250,3 @@ def addTaf():
     director = request.form["Input-Director"]
     db_updateTaf(name, director)
     return redirect("http://127.0.0.1:5000/list/students")
-

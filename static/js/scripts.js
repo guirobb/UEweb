@@ -1,4 +1,4 @@
-function enableEditCompany(ident, name)
+function enableEdit(ident, name)
 {
     // console.log(ident, name)
     let el = document.getElementById(`edit_name-${ident}`);
@@ -6,7 +6,9 @@ function enableEditCompany(ident, name)
     let el3 = document.getElementById(`save_btn-${ident}`);
     let el4 = document.getElementById(`delete_btn-${ident}`);
     let el5 = document.getElementById(`edit_btn-${ident}`);
-    let el6 = document.getElementById(`discardEditCompany_btn-${ident}`);
+    let el6 = document.getElementById(`discardEdit_btn-${ident}`);
+    let el7 = document.getElementById(`labelTaf_director-${ident}`);
+    let el8 = document.getElementById(`editTafInput_director-${ident}`);
 
     el.classList.remove("hidden");
     el2.classList.add("hidden");
@@ -14,15 +16,19 @@ function enableEditCompany(ident, name)
     el4.classList.add("hidden");
     el5.classList.add("hidden");
     el6.classList.remove("hidden");
+    el7 != undefined ? el7.classList.add("hidden") : false;
+    el8 != undefined ? el8.classList.remove("hidden") : false;
 }
 
-function saveChangesCompany(ident){
+function saveChanges(ident){
     let el = document.getElementById(`edit_name-${ident}`);
     let el2 = document.getElementById(`label_name-${ident}`);
     let el3 = document.getElementById(`save_btn-${ident}`);
     let el4 = document.getElementById(`delete_btn-${ident}`);
     let el5 = document.getElementById(`edit_btn-${ident}`);
-    let el6 = document.getElementById(`discardEditCompany_btn-${ident}`);
+    let el6 = document.getElementById(`discardEdit_btn-${ident}`);
+    let el7 = document.getElementById(`labelTaf_director-${ident}`);
+    let el8 = document.getElementById(`editTafInput_director-${ident}`);
 
     el.classList.add("hidden");
     console.log(el2.innerText);
@@ -32,6 +38,9 @@ function saveChangesCompany(ident){
     el4.classList.remove("hidden");
     el5.classList.remove("hidden");
     el6.classList.add("hidden");
+    el7 != undefined ? el7.classList.remove("hidden") : false;
+    el8 != undefined ? el8.classList.add("hidden") : false;
+
 
     let xhr = new XMLHttpRequest();
     let url = "../../update/enterprise";
@@ -54,4 +63,5 @@ function saveChangesCompany(ident){
 
     // Sending data with the request
     xhr.send(data);
+
 }

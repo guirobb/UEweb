@@ -32,7 +32,7 @@
                             <input type="text" class="form-control"  aria-describedby="Input_Enterprise-{{ company.id }}_help" value="{{ company.name }}">
                         </td>
                         <td>
-                            <a id="edit_btn-{{ company.id }}"  class="btn btn-white btn-md btn-block text-primary" onclick="enableEditCompany('{% set iid = company.id | string() %}{{ iid }}', '{% set nameCompany = company.name | string() %}{{ nameCompany }}')" >
+                            <a id="edit_btn-{{ company.id }}"  class="btn btn-white btn-md btn-block text-primary" onclick="enableEdit('{% set iid = company.id | string() %}{{ iid }}', '{% set nameCompany = company.name | string() %}{{ nameCompany }}')" >
                                 <i class="bi bi-pencil-fill"></i>
                                 <strong>Edit</strong>
                             </a>
@@ -42,12 +42,12 @@
                             </a>
 
 
-                            <a id="save_btn-{{ company.id }}" class="btn btn-white btn-md btn-block text-success hidden" onclick="saveChangesCompany('{% set iid = company.id | string() %}{{ iid }}')" >
+                            <a id="save_btn-{{ company.id }}" class="btn btn-white btn-md btn-block text-success hidden" onclick="saveChanges('{% set iid = company.id | string() %}{{ iid }}')" >
                                 <i class="bi bi-save2-fill"></i>
                                 <strong>Save</strong>
                             </a>
-                            <a id="discardEditCompany_btn-{{ company.id }}" class="btn btn-white btn-md btn-block text-secondary hidden"
-                                onclick="saveChangesCompany('{% set iid = company.id | string() %}{{ iid }}')">
+                            <a id="discardEdit_btn-{{ company.id }}" class="btn btn-white btn-md btn-block text-secondary hidden"
+                                onclick="saveChanges('{% set iid = company.id | string() %}{{ iid }}')">
                                 <i class="bi bi-x-lg"></i>
                                 <strong>Discard</strong>
                             </a>

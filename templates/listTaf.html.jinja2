@@ -1,0 +1,71 @@
+{% extends "layout.html.jinja2" %}
+
+
+{% block body %}
+
+<div class="container p3">
+
+<h1 class="text-dark"><strong>Listes TAF</strong></h1>
+     <nav aria-label="breadcrumb" class="main-breadcrumb mx-3">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="./">Home</a></li>
+          <li class="breadcrumb-item"><a href="javascript:void(0)">Listes TAF</a></li>
+        </ol>
+      </nav>
+
+<div class="card p-5" style="border: none; border-radius: 15px;">
+
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th style="width:3%">ID</th>
+                <th style="width:35%">Nom</th>
+                <th style="width:35%">Responsable</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for taf in listTaf %}
+            <tr>
+                <th scope="row">{{ taf.id }}</th>
+
+                <td id="label_name-{{ taf.id }}">{{ taf.name }}</td>
+                <td id="edit_name-{{ taf.id }}" class="hidden">
+                    <input type="text" class="form-control" aria-describedby="Input_TAF-{{ taf.id }}_help" value="{{ taf.name }}">
+                </td>
+
+                <td id="labelTaf_director-{{ taf.id }}">{{ taf.director }}</td>
+                <td id="editTafInput_director-{{ taf.id }}" class="hidden">
+                    <input type="text" class="form-control" aria-describedby="Input_TAFDirector-{{ taf.director }}_help" value="{{ taf.director }}">
+                </td>
+
+                <td>
+                    <a id="edit_btn-{{ taf.id }}" class="btn btn-white btn-md btn-block text-primary" onclick="enableEdit('{% set iid = taf.id | string() %}{{ iid }}', '{% set nameTaf = taf.name | string() %}{{ nameTaf }}')">
+                        <i class="bi bi-pencil-fill"></i>
+                        <strong>Edit</strong>
+                    </a>
+                    <a id="delete_btn-{{ taf.id }}" class="btn btn-white btn-md btn-block text-secondary">
+                        <i class="bi bi-trash"></i>
+                        <strong>Delete</strong>
+                    </a>
+
+
+                    <a id="save_btn-{{ taf.id }}" class="btn btn-white btn-md btn-block text-success hidden"  onclick="saveChanges('{% set iid = taf.id | string() %}{{ iid }}')">
+                        <i class="bi bi-save2-fill"></i>
+                        <strong>Save</strong>
+                    </a>
+                    <a id="discardEdit_btn-{{ taf.id }}"
+                        class="btn btn-white btn-md btn-block text-secondary hidden">
+                        <i class="bi bi-x-lg"></i>
+                        <strong>Discard</strong>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</div>
+{% endblock %}
