@@ -56,15 +56,18 @@ def test():
 
 @app.route('/list/students')
 def students():
-    students = db.session.query(Student, Promo).join(Promo, Student.promo == Promo.id).all()
+    students = db.session.query(User, Promo).join(Promo, User.promo == Promo.id).all()
     print(students[0][0])
-    return render_template("listStudents.html.jinja2", students=students)
+    for student in students :
+        occupations = Occupation.query.filter(Occupation.id_user==student.id)
+
+    return render_template("listStudents.html.jinja2", students=students, tafs=taf)
 
 
 @app.route('/list/students/edit')
 def edit_students():
     ident = request.args.get('id', default='*', type=int)
-    student = Student.query.filter(Student.id == ident)
+    student = User.query.filter(User.id == ident)
     taf = Taf.query.all()
     return render_template("edituser.html.jinja2", student=student, taf=taf)
 
@@ -92,14 +95,14 @@ def edit_taf():
 
 @app.route('/admin/companies/list')
 def list_company():
-    companies = Enterprise.query.all()
+    companies = Organisation.query.all()
     return render_template("listEnterprises.html.jinja2", companies=companies)
 
 
 @app.route('/admin/company/edit')
 def edit_company():
     id_company = request.args.get('id', default='*', type=int)
-    enterp = Enterprise.query.filter(Enterprise.id == id_company)
+    enterp = Organisation.query.filter(Organisation.id == id_company)
     return render_template("editTaf.html.jinja2", company=enterp)
 
 
@@ -108,7 +111,7 @@ def affiche_promo():
     print("coucou")
     promo = request.args.get('promo', default='*', type=int)
     print(promo)
-    students = db.session.query(Student, Promo).join(Promo, Student.promo == Promo.id).filter(Student.promo == promo)
+    students = db.session.query(User, Promo).join(Promo, User.promo == Promo.id).filter(User.promo == promo)
     return render_template("listStudents.html.jinja2", students=students)
 
 
@@ -117,7 +120,7 @@ def affiche_stage():
     print("coucou")
     promo = request.args.get('stage', default='*', type=int)
     print(promo)
-    students = Student.query.filter(Student.stage == promo)
+    students = User.query.filter(User.stage == promo)
     return render_template("listStudents.html.jinja2", students=students)
 
 
@@ -132,9 +135,9 @@ def affiche_taf():
     print(promo)
     end = request.args.get('end', default='*', type=int)
     start = request.args.get('start', default='*', type=int)
-    students = Student.query.filter(
-        ((Student.taf1 == promo) & ((Student.promo - 1 <= end) & (Student.promo - 1 >= start))) | (
-                (Student.taf2 == promo) & ((Student.promo <= end) & (Student.promo >= start))))
+    students = User.query.filter(
+        ((User.taf1 == promo) & ((User.promo - 1 <= end) & (User.promo - 1 >= start))) | (
+                (User.taf2 == promo) & ((User.promo <= end) & (User.promo >= start))))
     return render_template("listStudents.html.jinja2", students=students)
 
 
@@ -200,7 +203,7 @@ def updateTaf():
 def search_enterprise():
     search_text = request.args.get('enterprise', default='*', type=str)
     print(search_text)
-    enterprises = Enterprise.query.filter(Enterprise.name.ilike(f'%{search_text}%')).all()
+    enterprises = Organisation.query.filter(Organisation.name.ilike(f'%{search_text}%')).all()
     print(enterprises)
     return render_template("enterprise.html.jinja2", enterprises=enterprises)
 
@@ -216,7 +219,7 @@ def addStudent():
     promo = request.form['select-Promo']
     occupation = request.form['Input-Occupation']
     db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, 0, promo, occupation)
-    student = Student.query.filter(Student.first_name == first_name, Student.name == name, Student.taf1 == taf1, Student.taf2 == taf2)
+    student = User.query.filter(User.first_name == first_name, User.name == name, User.taf1 == taf1, User.taf2 == taf2)
     return redirect("http://127.0.0.1:5000/create/stage?id="+str(student[0].id))
 
 @app.route("/add/stage", methods = ["POST"])
@@ -231,7 +234,7 @@ def addStage() :
     enterprise = request.form['enterprise']
     db_addStage(title, date_start, date_end, resume, rapport, tutor, enterprise)
     stage = Stage.query.filter(title=title, date_start=date_start, date_end=date_end, resume=resume)
-    student = Student.query.filter(id=student_id)
+    student = User.query.filter(id=student_id)
     student.stage = stage.id
     db.session.commit()
     return redirect("http://127.0.0.1:5000/list/students")
@@ -250,3 +253,19 @@ def addTaf():
     director = request.form["Input-Director"]
     db_updateTaf(name, director)
     return redirect("http://127.0.0.1:5000/list/students")
+
+@app.route("/list/students/stage")
+def research_internship():
+    return redirect("http://127.0.0.1:5000/list/students")
+
+@app.route("/detail/student")
+def detailed_student():
+    id = request.args.get('id', default='*', type=int)
+    student = User.query.filter(User.id==id)[0]
+    print(student.name)
+    taf1 = Taf.query.filter(Taf.id==student.taf1)[0]
+    taf2 = Taf.query.filter(Taf.id==student.taf2)[0]
+    stage = Stage.query.filter(Stage.id== student.stage)[0]
+    promo = Promo.query.filter(Promo.id==student.promo)[0]
+    occupations = Occupation.query.filter(Occupation.id_user==student.id)
+    return render_template("detailedStudent.html.jinja2", student=student, taf1=taf1, taf2=taf2, stage=stage, promo=promo, occupations=occupations)

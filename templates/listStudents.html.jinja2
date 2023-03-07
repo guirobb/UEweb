@@ -2,22 +2,16 @@
 
 {% block body %}
 <script>
-function promo(promo){
-        const url = "http://127.0.0.1:5000/promo?promo="+promo;
+function detailed(promo){
+        const url = "http://127.0.0.1:5000/detail/student?id="+promo;
         window.location.href = url;
     };
-
 </script>
     <div class="container">
 
     <h1 class="text-dark"><strong>Listes des élèves</strong></h1>
     <!-- Breadcrumb -->
-      <nav aria-label="breadcrumb" class="main-breadcrumb mx-3">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="./">Home</a></li>
-          <li class="breadcrumb-item"><a href="javascript:void(0)">List Students</a></li>
-        </ol>
-      </nav>
+    <div style="opacity: 0">a</div>
       <!-- /Breadcrumb -->
 
     <!--ListStudents-->
@@ -26,10 +20,10 @@ function promo(promo){
         <div class="col mb-3">
 
           <div class="card no-border" style="border-radius: 15px;" id="student-{{ student[0].id }}">
-            <img src="https://www.bootdey.com/image/340x120/FFB6C1/000000" alt="Cover" class="card-img-top border_top-rounded">
+            <!-- <img src="https://www.easydesk.fr/wp-content/uploads/2017/11/bandeau-600x400.png" alt="Cover" class="card-img-top border_top-rounded"> -->
             <div class="card-body text-center no-border">
               <img src="https://bootdey.com/img/Content/avatar/avatar1.png" style="width:100px;margin-top:-65px" alt="User" class="img-fluid img-thumbnail rounded-circle border-0 mb-3">
-              <h5 class="card-title"><strong>{{ student[0].first_name }} {{ student[0].name}}</strong> </h5>
+              <h5 class="card-title" onclick="detailed({{ student[0].id }})"><strong>{{ student[0].first_name }} {{ student[0].name}}</strong> </h5>
               <a class="nav-link"  href="../promo?promo={{ student[0].promo }}">Promotion : {{ student[1].annee }}</a>
               <p class="text-muted font-size-sm">Poste actuel : {{ student[0].occupation }}</p>
             </div>

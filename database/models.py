@@ -1,8 +1,8 @@
 from database.database import db
 
 
-class Enterprise(db.Model):
-    __tablename__ = "Enterprise"
+class Organisation(db.Model):
+    __tablename__ = "Organisation"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
 
@@ -21,7 +21,7 @@ class Tutor(db.Model):
     first_name = db.Column(db.Text)
     number = db.Column(db.Integer)
     mail = db.Column(db.Text)
-    enterprise = db.Column(db.Integer, db.ForeignKey('Enterprise.id'))
+    enterprise = db.Column(db.Integer, db.ForeignKey('Organisation.id'))
 
 
 class Stage(db.Model):
@@ -33,15 +33,15 @@ class Stage(db.Model):
     resume = db.Column(db.Text)
     rapport = db.Column(db.Text)
     tutor = db.Column(db.Integer, db.ForeignKey('Tutor.id'))
-    enterprise = db.Column(db.Integer, db.ForeignKey('Enterprise.id'))
+    enterprise = db.Column(db.Integer, db.ForeignKey('Organisation.id'))
 
 class Promo(db.Model):
     __tablename__ = "Promo"
     id = db.Column(db.Integer, primary_key=True)
     annee = db.Column(db.Integer)
 
-class Student(db.Model):
-    __tablename__ = "Student"
+class User(db.Model):
+    __tablename__ = "User"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
     first_name = db.Column(db.Text)
@@ -52,4 +52,14 @@ class Student(db.Model):
     stage = db.Column(db.Integer, db.ForeignKey('Stage.id'))
     promo = db.Column(db.Integer, db.ForeignKey('Promo.id'))
     occupation= db.Column(db.Text)
+    role= db.Column(db.Text)
+
+class Occupation(db.Model):
+    __tablename__ = "Occupation"
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text)
+    description = db.Column(db.Text)
+    start_date = db.Column(db.Integer)
+    id_user = db.Column(db.Integer, db.ForeignKey('User.id'))
+    organisation = db.Column(db.Integer, db.ForeignKey('Organisation.id'))
 
