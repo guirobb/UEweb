@@ -68,3 +68,10 @@ class Filter :
         self.taf = -1
         self.promo = 1
         self.enterprise = "---"
+
+class Account(db.Model):
+    __tablename__ = "Account"
+    id = db.Column(db.Integer, primary_key=True)
+    login = db.Column(db.Text)
+    password = db.Column(db.Text)
+    id_user = db.Column(db.Integer, db.ForeignKey('User.id'))

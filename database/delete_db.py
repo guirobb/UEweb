@@ -28,3 +28,9 @@ def db_deleteOccupation(id):
     occupation = Occupation.query.get(id)
     db.session.delete(occupation)
     db.session.commit()
+
+def db_deletePromo(id):
+    print("db_deletePromo")
+    occupation = Promo.query.get(id)
+    db.session.delete(occupation)
+    db.session.commit()

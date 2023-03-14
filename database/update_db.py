@@ -42,3 +42,9 @@ def db_updateOccupation(id, title, description, start_date, organisation):
         occupation.start_date = start_date2
     occupation.organisation = organisation
     db.session.commit()
+
+def db_updatePromo(id, annee) :
+    print("db_updatePromo")
+    promo = Promo.query.get(id)
+    promo.annee = annee
+    db.session.commit()
