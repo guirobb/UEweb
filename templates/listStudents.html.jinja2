@@ -41,6 +41,15 @@ function detailed(promo){
          <input type="number" id="endyear" name="endyear">
          </form>
         </div>
+        <div class="main">
+              <label for="select-enterprise" class="form-label text-primary form-label-left">Entreprise</label>
+              <select class="form-select mb-3"  id="select-company" aria-label=".form-select" name="select-enterprise" autocomplete="off">
+                <option value="">Sélectionner ou taper l'entreprise</option>
+                {% for enterprise in companies %}
+                <option value="{{ enterprise.id }}">{{enterprise.id}} - {{ enterprise.name.upper() }}</option>
+                {% endfor %}
+              </select>
+            </div>
     </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 m-4">
         {% for student in students %}
@@ -143,7 +152,7 @@ function verify(taf1,taf2,taf, startyear, endyear, promo) {
     }
     }
 
-window.onload = function (e) {
+window.onload = function ea(e) {
     var num = "{{num}}"
     for (let i = 1; i < num+1; i++) {
         let el=document.getElementById(`student-${i}`)
