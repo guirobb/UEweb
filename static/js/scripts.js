@@ -276,3 +276,11 @@ function deleteTaf(id) {
     xhr.send(data);
     el.classList.add("hidden");
 }
+
+function becomeUser() {
+    localStorage.setItem("role","user");
+}
+
+function becomeAdmin() {
+    localStorage.setItem("role","admin");
+}
