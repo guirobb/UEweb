@@ -77,7 +77,8 @@ def students():
     taf = Taf.query.all()
     num= len(students)
     promos = Promo.query.all()
-    return render_template("listStudents.html.jinja2", students=students, taf=taf, filter= Filter(), num= num,promos=promos)
+    enterprises = Organisation.query.all()
+    return render_template("listStudents.html.jinja2", students=students, taf=taf, filter= Filter(), num=num, promos=promos, companies=enterprises)
 
 
 @app.route('/list/students/edit')
