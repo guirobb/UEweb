@@ -82,7 +82,8 @@ def students():
     taf = Taf.query.all()
     num= len(students)
     promos = Promo.query.all()
-    return render_template("listStudents.html.jinja2", students=students, taf=taf, filter= Filter(), num= num,promos=promos)
+    enterprises = Organisation.query.all()
+    return render_template("listStudents.html.jinja2", students=students, taf=taf, filter= Filter(), num=num, promos=promos, companies=enterprises)
 
 
 @app.route('/list/students/edit')
@@ -177,15 +178,21 @@ def deleteStudent():
 
 @app.route("/delete/enterprise/", methods=["POST"])
 def deleteEnterprise():
-    id = request.form['id']
+    id = request.json['id']
     db_deleteEnterprise(id)
     return redirect("http://127.0.0.1:5000/list/students")
 
 
 @app.route("/delete/taf/", methods=["POST"])
 def deleteTaf():
-    id = request.form['id']
+    id = request.json['id']
     db_deleteTaf(id)
+    return redirect("http://127.0.0.1:5000/list/students")
+
+@app.route("/delete/promo/", methods=["POST"])
+def deletePromo():
+    id = request.json['id']
+    db_deletePromo(id)
     return redirect("http://127.0.0.1:5000/list/students")
 
 
@@ -204,6 +211,7 @@ def updateStudent():
 
 @app.route("/update/enterprise", methods=["POST"])
 def updateEnterprise():
+    print("updateEnterprise")
     print(request.json)
     id = request.json['id']
     name = request.json['name']
@@ -217,6 +225,14 @@ def updateTaf():
     name = request.json['name']
     director = request.json["responsable"]
     db_updateTaf(id, name, director)
+    return redirect("http://127.0.0.1:5000/list/students")
+
+@app.route("/update/promo", methods=["POST"])
+def updatePromo():
+    print("POST_Promo")
+    id = request.json['id']
+    annee = request.json['annee']
+    db_updatePromo(id, annee)
     return redirect("http://127.0.0.1:5000/list/students")
 
 

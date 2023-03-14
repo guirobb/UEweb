@@ -25,7 +25,7 @@
                 </thead>
                 <tbody>
                     {% for company in companies %}
-                    <tr>
+                    <tr id="company-{{ company.id }}">
                         <th scope="row">{{ company.id }}</th>
                         <td id="label_name-{{ company.id }}">{{ company.name }}</td>
                         <td id="edit_name-{{ company.id }}" class="hidden">
@@ -36,7 +36,7 @@
                                 <i class="bi bi-pencil-fill"></i>
                                 <strong>Edit</strong>
                             </a>
-                            <a id="delete_btn-{{ company.id }}"  class="btn btn-white btn-md btn-block text-secondary" >
+                            <a id="delete_btn-{{ company.id }}"  class="btn btn-white btn-md btn-block text-secondary" onclick="deleteEnterprise({{ company.id }})">
                                 <i class="bi bi-trash"></i>
                                 <strong>Delete</strong>
                             </a>
@@ -58,5 +58,4 @@
             </table>
         </div>
     </div>
-
 {% endblock %}

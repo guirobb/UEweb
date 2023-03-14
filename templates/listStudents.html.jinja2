@@ -17,23 +17,39 @@ function detailed(promo){
     <!--ListStudents-->
     <div>
         <p>Filter</p>
-        <select class="form-select mb-3" aria-label=".form-select" name="select-TAF2" id="select-TAF">
-            <option default disabled>Select option</option>
-        <option value="0">Toutes</option>
-              {% for tf in taf %}
-                <option value="{{ tf.id }}">{{ tf.name }}</option>
-              {% endfor %}
-          </select>
-         <div class="mb-3">
-          <label for="select-TAF1" class="form-label text-primary">Promo</label>
-          <select class="form-select  mb-3" aria-label=".form-select-md" name="select-Promo" id="select-Promo">
+    <select class="form-select  mb-3" aria-label=".form-select-md" name="select-Promo" id="select-Promo">
             <option default disabled>Select option</option>
             <option value="-1">Toutes</option>
               {% for promo in promos %}
                 <option value="{{ promo.id }}">{{ promo.annee }}</option>
               {% endfor %}
           </select>
+
+         <div class="mb-3">
+          <label for="select-TAF1" class="form-label text-primary">Promo</label>
+         <form id="select-TAF">
+             <select class="form-select mb-3" aria-label=".form-select" name="selecter-TAF" id="selecter-TAF">
+            <option default disabled>Select option</option>
+        <option value="0">Toutes</option>
+              {% for tf in taf %}
+                <option value="{{ tf.id }}">{{ tf.name }}</option>
+              {% endfor %}
+          </select>
+         <label for="startyear">Année début</label>
+         <input type="number" id="startyear" name="startyear" class="startyear">
+         <label for="endyear">Année fin</label>
+         <input type="number" id="endyear" name="endyear">
+         </form>
         </div>
+        <div class="main">
+              <label for="select-enterprise" class="form-label text-primary form-label-left">Entreprise</label>
+              <select class="form-select mb-3"  id="select-company" aria-label=".form-select" name="select-enterprise" autocomplete="off">
+                <option value="">Sélectionner ou taper l'entreprise</option>
+                {% for enterprise in companies %}
+                <option value="{{ enterprise.id }}">{{enterprise.id}} - {{ enterprise.name.upper() }}</option>
+                {% endfor %}
+              </select>
+            </div>
     </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 m-4">
         {% for student in students %}
@@ -47,10 +63,11 @@ function detailed(promo){
               <img src="https://bootdey.com/img/Content/avatar/avatar1.png" style="width:100px;margin-top:-65px" alt="User" class="img-fluid img-thumbnail rounded-circle border-0 mb-3">
               <h5 class="card-title" onclick="detailed({{ student[0].id }})"><strong>{{ student[0].first_name }} {{ student[0].name}}</strong> </h5>
               <a class="nav-link"  href="../promo?promo={{ student[0].promo }}" value="{{ student[0].promo }}">Promotion : {{ student[1].annee }}</a>
+                <a class="promoyear" hidden id="promoyear" value="{{ student[1].annee }}"></a>
               <p class="text-muted font-size-sm">Poste actuel : {{ student[0].occupation }}</p>
             </div>
-            <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-center border_bottom-rounded no-border">
-              <a class="btn btn-light btn-md btn-block text-primary" href="/list/students/edit?id={{ student[0].id }}">
+            <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-center border_bottom-rounded no-border button_bar">
+              <a class="btn btn-light btn-md btn-block text-primary edit_button" href="/list/students/edit?id={{ student[0].id }}">
                   <i class="bi bi-pencil-fill"></i>
                   <strong>Edit</strong>
               </a>
@@ -70,17 +87,22 @@ function detailed(promo){
 <script>
 const tafSelect = document.getElementById('select-TAF');
 tafSelect.addEventListener('change', (e) => {
-    const value = e.target.value;
-    console.log(value);
+
+    taf = document.getElementById('selecter-TAF').value
+    startyear = document.getElementById('startyear').value
+    endyear = document.getElementById('endyear').value
+    console.log(taf)
+    console.log(startyear)
+    console.log(endyear)
 
     var num = "{{num}}"
     for (let i = 1; i < num+1; i++) {
         let el=document.getElementById(`student-${i}`)
-        console.log(el.getElementsByClassName("taf1")[0].attributes["value"].value)
         el2 = el.getElementsByClassName("taf1")[0].attributes["value"].value
         el3 = el.getElementsByClassName("taf2")[0].attributes["value"].value
-        console.log(el2)
-        if (el2==value || el3==value || value==0) {
+        el4 = el.getElementsByClassName("promoyear")[0].attributes["value"].value
+        console.log(el4)
+        if (verify(el2,el3,taf,startyear,endyear,el4) || taf==0) {
             console.log("shown")
             el.classList.remove("hidden");
         }
@@ -113,6 +135,37 @@ PromoSelect.addEventListener('change', (e) => {
 
     }
 });
+
+function verify(taf1,taf2,taf, startyear, endyear, promo) {
+    if (taf1==taf) {
+            teststart = (startyear=="")||(promo>startyear)
+            testend = (endyear=="")||(promo<endyear)
+            return (teststart && testend)
+        }
+    if (taf2==taf) {
+            teststart = (startyear=="")||(promo>startyear-1)
+            testend = (endyear=="")||(promo<endyear+1)
+            return (teststart && testend)
+        }
+    if (!(taf==taf1 || taf==taf2)) {
+        return false
+    }
+    }
+
+window.onload = function ea(e) {
+    var num = "{{num}}"
+    for (let i = 1; i < num+1; i++) {
+        let el=document.getElementById(`student-${i}`)
+        roleuser = window.localStorage.getItem("role")
+        console.log(roleuser)
+        if (roleuser=="admin") {
+            el.getElementsByClassName("button_bar")[0].style.visibility = 'visible';
+        }
+        else {
+            el.getElementsByClassName("button_bar")[0].style.visibility = 'hidden';
+        }
+    }
+}
 </script>
 {% endblock %}
 
