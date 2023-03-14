@@ -70,8 +70,7 @@ def test():
 
 @app.route('/list/students')
 def students():
-    students = db.session.query(User, Promo).join(Promo, User.promo == Promo.id).all()
-    print(students[0][0])
+    students = db.session.query(User, Promo, Stage).join(Promo, Stage).all()
     for student in students :
         occupations = Occupation.query.filter(Occupation.id_user==student[0].id)
     taf = Taf.query.all()

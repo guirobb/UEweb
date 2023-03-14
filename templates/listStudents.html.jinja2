@@ -41,7 +41,7 @@ function detailed(promo){
          <input type="number" id="endyear" name="endyear">
          </form>
         </div>
-        <div class="main">
+        <div class="main" id ="select-enterprise">
               <label for="select-enterprise" class="form-label text-primary form-label-left">Entreprise</label>
               <select class="form-select mb-3"  id="select-company" aria-label=".form-select" name="select-enterprise" autocomplete="off">
                 <option value="">Sélectionner ou taper l'entreprise</option>
@@ -56,6 +56,7 @@ function detailed(promo){
         <div class="col mb-3" id="student-{{ student[0].id }}">
         <div hidden class="taf1" id="taf1" value="{{ student[0].taf1 }}"></div>
             <div hidden class="taf2"  id="taf2" value="{{ student[0].taf2 }}"></div>
+            <div hidden class="enterprise_stage" id="enterprise_stage" value="{{ student[2].enterprise }}"></div>
 
           <div class="card hover no-border" style="border-radius: 15px;">
             <img src="https://www.bootdey.com/image/340x120/FFB6C1/000000" alt="Cover" class="card-img-top border_top-rounded">
@@ -166,6 +167,25 @@ window.onload = function ea(e) {
         }
     }
 }
+
+selectEnterprise = document.getElementById("select-enterprise")
+selectEnterprise.addEventListener('change', (e) => {
+    const value = e.target.value;
+    var num = "{{num}}"
+    for (let i = 1; i < num+1; i++) {
+    let el=document.getElementById(`student-${i}`)
+    console.log(el.getElementsByClassName("enterprise_stage")[0].attributes["value"].value)
+    el2 = el.getElementsByClassName("enterprise_stage")[0].attributes["value"].value
+    if (el2==value || (value==-1&&el2>0)) {
+            console.log("shown")
+            el.classList.remove("hidden");
+        }
+        else {
+            console.log("hidden");
+            el.classList.add("hidden");
+        }
+    }
+})
 </script>
 {% endblock %}
 
