@@ -23,8 +23,8 @@
             </a>
           </div>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <div class="collapse navbar-collapse sessionActive hidden" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0 sessionActive hidden">
                 <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="/">Accueil</a>
                 </li>
@@ -34,14 +34,15 @@
               </ul>
             </div>
 
+            <div class="btn-group sessionActive hidden" style="margin-right: 4rem;">
             <div class="btn-group" style="margin-right: 4rem;" id="dropdown">
-                <button onclick="becomeAdmin()">Admin</button>
-                <button onclick="becomeUser()">User</button>
+                <button class="btn btn-primary" onclick="becomeAdmin()">Admin</button>
+                <button class="btn btn-secondary" onclick="becomeUser()">User</button>
                 <button class="btn btn-md dropdown-toggle text-primary" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-person-circle font-2"></i>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Hello <strong>Utilisateur</strong>!</a></li>
+                    <li><a class="dropdown-item" href="#">Bonjour <strong>Utilisateur</strong> !</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="/list/students">Élèves</a></li>
                     <li><a class="dropdown-item taf-list" href="/admin/taf/list">TAFs</a></li>
@@ -51,37 +52,63 @@
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Log out</a></li>
                 </ul>
+
+
             </div>
+          <div class="btn-group noSessionActive" style="margin-right: 4rem;">
+              <a type="button" class="btn btn-primary" href="/login">Connection</a>
+          </div>
         </nav>
     </div>
 </header>
 {% block body %}
-{% endblock %}
 
+{% endblock %}
+    <script>
+        validateSession();
+
+        function validateSession(){
+
+            let sessEls = document.getElementsByClassName(`sessionActive`);
+            let noSessEls = document.getElementsByClassName("noSessionActive");
+
+            const dataStorage = {
+               isAdmin: localStorage.getItem("isAdmin"),
+               sessionID:localStorage.getItem("sessionID")
+            };
+
+            console.log(sessEls)
+
+            if(dataStorage.sessionID==undefined){
+                console.log("empty session")
+                for (let i = 0; i < sessEls.length; i++) {
+                    sessEls[i].classList.add("hidden");
+                }
+
+                for (let i = 0; i < noSessEls.length; i++) {
+                    noSessEls[i].classList.remove("hidden");
+                }
+
+                if(JSON.parse(dataStorage.isAdmin)){
+
+                }
+            }else{
+                console.log("has session")
+                for (let i = 0; i < sessEls.length; i++) {
+                    sessEls[i].classList.remove("hidden");
+                }
+
+                for (let i = 0; i < noSessEls.length; i++) {
+                    noSessEls[i].classList.add("hidden");
+                }
+
+            }
+        }
+    </script>
+    <script src="{{ url_for("static", filename="vendor/popperJS/popper.min.js" ) }}"></script>
     <script src="{{ url_for("static", filename="js/scripts.js") }}"></script>
     <script src="{{ url_for("static", filename="vendor/bootstrap/js/bootstrap.min.js") }}"></script>
     <script src="{{ url_for("static", filename="vendor/tom-selectJS/tom-select.complete.js") }}"></script>
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-<script>
-    dropd = document.getElementById("dropdown")
-    dropd.onclick = function (e) {
-    var num = "{{num}}"
-    for (let i = 1; i < num+1; i++) {
-        let el=document.getElementById(`dropdown`)
-        roleuser = window.localStorage.getItem("role")
-        console.log(roleuser)
-        if (roleuser=="admin") {
-            el.getElementsByClassName("taf-list")[0].style.visibility = 'visible';
-            el.getElementsByClassName("promo-list")[0].style.visibility = 'visible';
-            el.getElementsByClassName("enterprise-list")[0].style.visibility = 'visible';
-        }
-        else {
-            el.getElementsByClassName("taf-list")[0].style.visibility = 'hidden';
-            el.getElementsByClassName("promo-list")[0].style.visibility = 'hidden';
-            el.getElementsByClassName("enterprise-list")[0].style.visibility = 'hidden';
-        }
-    }
-}
-</script>
+    
 </body>
 </html>
