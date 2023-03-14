@@ -56,6 +56,11 @@ def index():
     return render_template("layout.html.jinja2")
 
 
+@app.route('/login')
+def login():
+    return render_template("login.html.jinja2")
+
+
 @app.route("/test")
 def test():
     clean()

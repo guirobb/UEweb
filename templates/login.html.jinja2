@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css" ) }}" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{{ url_for("static", filename="vendor/bootstrap/css/bootstrap.min.css" ) }}" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{{ url_for("static", filename="vendor/tom-selectJS/tom-select.min.css" ) }}" crossorigin="anonymous" />
+    <link rel="icon" type="image/x-icon" href="{{ url_for("static", filename="icon/favicon.ico" )}}" crossorigin="anonymous">
+</head>
+
+<body style="background-color:#f1f1f1">
+    <section class="h-100">
+        <div class="container h-100">
+            <div class="row justify-content-sm-center h-100">
+                <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                    <div class="text-center my-5">
+                        <img src="{{ url_for("static", filename="img/Logo_Institut_Mines-Telecom.svg") }}" alt="logo"
+                            width="100">
+                    </div>
+                    <div class="card border-rounded no-border">
+                        <div class="card-body p-5">
+                            <h1 class="fs-4 card-title fw-bold mb-4">Connection</h1>
+                            <form method="POST" class="needs-validation" novalidate="" autocomplete="off">
+                                <div class="mb-3">
+                                    <label class="mb-2 text-muted" for="email">Utilisateur</label>
+                                    <input id="email" type="email" class="form-control" name="email" value="" required
+                                        autofocus>
+                                    <div class="invalid-feedback">
+                                        L'utilisateur est invalide
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="mb-2 w-100">
+                                        <label class="text-muted" for="password">Mot de passe</label>
+                                        <a href="forgot.html" class="float-end">
+                                            Forgot Password?
+                                        </a>
+                                    </div>
+                                    <input id="password" type="password" class="form-control" name="password" required>
+                                    <div class="invalid-feedback">
+                                        Le mot de passe est obligatoire
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="remember" id="remember" class="form-check-input">
+                                        <label for="remember" class="form-check-label">Se souvenir</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary ms-auto">
+                                        Connection
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer py-3 border-0">
+                            {#<div class="text-center">
+                                Don't have an account? <a href="register.html" class="text-dark">Create One</a>
+                            </div>#}
+                        </div>
+                    </div>
+                    <div class="text-center mt-5 text-muted">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="{{ url_for("static", filename="js/login.js") }}"></script>
+    <script src="{{ url_for("static", filename="js/scripts.js") }}"></script>
+</body>
+
+</html>
