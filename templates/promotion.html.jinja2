@@ -1,0 +1,62 @@
+{% extends "layout.html.jinja2" %}
+
+
+{% block body %}
+<div class="container p-3">
+
+    <h1 class="text-dark"><strong>Listes Promotions</strong></h1>
+     <nav aria-label="breadcrumb" class="main-breadcrumb mx-3">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="./">Home</a></li>
+          <li class="breadcrumb-item"><a href="javascript:void(0)">Listes Promotions</a></li>
+        </ol>
+      </nav>
+
+
+    <div class="card p-5" style="border: none; border-radius: 15px;">
+
+            <table class="table table-hover text-center">
+                <thead>
+                    <tr>
+                        <th style="width:3%">ID</th>
+                        <th style="width:75%">Années</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for promo in promos %}
+                    <tr>
+                        <th scope="row">{{ promo.id }}</th>
+                        <td id="label_name-{{ promo.id }}">{{ promo.annee }}</td>
+                        <td id="edit_name-{{ promo.id }}" class="hidden">
+                            <input type="text" class="form-control"  aria-describedby="Input_Promo-{{ promo.id }}_help" value="{{ promo.annee }}">
+                        </td>
+                        <td>
+                            <a id="edit_btn-{{ promo.id }}"  class="btn btn-white btn-md btn-block text-primary" onclick="enableEdit('{% set iid = promo.id | string() %}{{ iid }}', '{% set yearPromo = promo.annee | string() %}{{ yearPromo }}')" >
+                                <i class="bi bi-pencil-fill"></i>
+                                <strong>Edit</strong>
+                            </a>
+                            <a id="delete_btn-{{ promo.id }}"  class="btn btn-white btn-md btn-block text-secondary" >
+                                <i class="bi bi-trash"></i>
+                                <strong>Delete</strong>
+                            </a>
+
+
+                            <a id="save_btn-{{ promo.id }}" class="btn btn-white btn-md btn-block text-success hidden" onclick="saveChanges('{% set iid = promo.id | string() %}{{ iid }}')" >
+                                <i class="bi bi-save2-fill"></i>
+                                <strong>Save</strong>
+                            </a>
+                            <a id="discardEdit_btn-{{ promo.id }}" class="btn btn-white btn-md btn-block text-secondary hidden"
+                                onclick="saveChanges('{% set iid = promo.id | string() %}{{ iid }}')">
+                                <i class="bi bi-x-lg"></i>
+                                <strong>Discard</strong>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
