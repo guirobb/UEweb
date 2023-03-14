@@ -63,3 +63,8 @@ class Occupation(db.Model):
     id_user = db.Column(db.Integer, db.ForeignKey('User.id'))
     organisation = db.Column(db.Integer, db.ForeignKey('Organisation.id'))
 
+class Filter :
+    def __init__(self):
+        self.taf = -1
+        self.promo = 1
+        self.enterprise = "---"
