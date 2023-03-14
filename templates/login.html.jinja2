@@ -24,10 +24,10 @@
                     <div class="card border-rounded no-border">
                         <div class="card-body p-5">
                             <h1 class="fs-4 card-title fw-bold mb-4">Connection</h1>
-                            <form method="POST" class="needs-validation" novalidate="" autocomplete="off">
+                            <form onsubmit="return checkConnection()" id="needs-validation" class="needs-validation" novalidate="" autocomplete="off">
                                 <div class="mb-3">
                                     <label class="mb-2 text-muted" for="email">Utilisateur</label>
-                                    <input id="email" type="email" class="form-control" name="email" value="" required
+                                    <input id="testlogin" type="email" class="form-control login" name="email" value="" required
                                         autofocus>
                                     <div class="invalid-feedback">
                                         L'utilisateur est invalide
@@ -41,7 +41,7 @@
                                             Forgot Password?
                                         </a>
                                     </div>
-                                    <input id="password" type="password" class="form-control" name="password" required>
+                                    <input id="testpassword" type="password" class="form-control password" name="password" required>
                                     <div class="invalid-feedback">
                                         Le mot de passe est obligatoire
                                     </div>
@@ -58,6 +58,14 @@
                                 </div>
                             </form>
                         </div>
+                        {% for account in accounts %}
+                            <div id="account-{{ account.id }}" hidden>
+                                <div class="login" value="{{ account.login }}"></div>
+                                <div class="password" value="{{ account.password }}"></div>
+                                <div class="id_user" value="{{ account.id_user }}"></div>
+                                <div class="role" value="{{ account.role }}"></div>
+                            </div>
+                        {% endfor %}
                         <div class="card-footer py-3 border-0">
                             {#<div class="text-center">
                                 Don't have an account? <a href="register.html" class="text-dark">Create One</a>
@@ -70,9 +78,45 @@
             </div>
         </div>
     </section>
-
     <script src="{{ url_for("static", filename="js/login.js") }}"></script>
     <script src="{{ url_for("static", filename="js/scripts.js") }}"></script>
 </body>
 
 </html>
+<script>
+    function checkConnection() {
+	var num = "{{num}}";
+        console.log(num);
+	let form =document.getElementById("needs-validation");
+	let testlogin = document.getElementById("testlogin").value;
+	let testpassword = document.getElementById("testpassword").value;
+	let test=false;
+    let i=1;
+    console.log(i,num);
+    console.log(test);
+    while(i<num+1 && test==false) {
+        console.log(i)
+		let el=document.getElementById(`account-${i}`);
+		let login = el.getElementsByClassName("login")[0].attributes["value"].value;
+		let password = el.getElementsByClassName("password")[0].attributes["value"].value;
+		let id_user = el.getElementsByClassName("id_user")[0].attributes["value"].value;
+		let role = el.getElementsByClassName("role")[0].attributes["value"].value;
+		if (login==testlogin && testpassword==password) {
+			test= true;
+            console.log("yes");
+			localStorage.setItem("id_user",id_user);
+			localStorage.setItem("role",role);
+            localStorage.setItem("sessionID",btoa("Session active!!!!!"));
+
+			form.classList.add('was-validated')
+			console.log("session OK!");
+            window.location.href="../"
+            return false;
+		}
+        else {
+            i=i+1;
+            console.log("no");
+        }
+	}
+}
+</script>

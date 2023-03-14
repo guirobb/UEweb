@@ -58,7 +58,9 @@ def index():
 
 @app.route('/login')
 def login():
-    return render_template("login.html.jinja2")
+    accounts = Account.query.all()
+    num = len(accounts)
+    return render_template("login.html.jinja2", accounts=accounts, num=num)
 
 
 @app.route("/test")

@@ -74,4 +74,5 @@ class Account(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     login = db.Column(db.Text)
     password = db.Column(db.Text)
+    role = db.Column(db.Text)
     id_user = db.Column(db.Integer, db.ForeignKey('User.id'))
