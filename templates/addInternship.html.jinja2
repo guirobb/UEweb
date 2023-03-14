@@ -84,14 +84,7 @@
             <div class="main">
               <label for="select-enterprise" class="form-label text-primary form-label-left">Entreprise</label>
               <select class="form-select mb-3"  id="select-company" aria-label=".form-select" name="select-enterprise" autocomplete="off">
-                <option value="">Sélectionner</option>
-                {% for enterprise in companies %}
-                <option value="{{ enterprise.id }}">{{enterprise.id}} - {{ enterprise.name.upper() }}</option>
-                {% endfor %}
-              </select>
-
-              <select class="form-select mb-3" aria-label=".form-select" name="select-enterprise">
-                <option default disabled selected>Sélectionner</option>
+                <option value="">Sélectionner ou taper l'entreprise</option>
                 {% for enterprise in companies %}
                 <option value="{{ enterprise.id }}">{{enterprise.id}} - {{ enterprise.name.upper() }}</option>
                 {% endfor %}
@@ -99,10 +92,10 @@
             </div>
           </div>
       
-        <div class="mb-3 form-check">
+        {# <div class="mb-3 form-check">
           <input type="checkbox" class="form-check-input" id="exampleCheck1">
           <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
+        </div> #}
         <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-5">
           <button type="button" class="btn btn-secondary btn-md">Discard</button>
           <button type="submit" class="btn btn-primary btn-md" >Save chages</button>
@@ -128,6 +121,11 @@
             sortField: {
               field: "text",
               direction: "asc"
+            },
+            onOptionAdd:function(value, data){
+              console.log(data); // company data to add
+              
+
             }
           });
         }
