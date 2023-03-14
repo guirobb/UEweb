@@ -25,29 +25,29 @@
                 </thead>
                 <tbody>
                     {% for promo in promos %}
-                    <tr>
-                        <th scope="row">{{ promo.id }}</th>
+                    <tr id="promo-{{ promo.id }}">
+                        <th scope="row" >{{ promo.id }}</th>
                         <td id="label_name-{{ promo.id }}">{{ promo.annee }}</td>
                         <td id="edit_name-{{ promo.id }}" class="hidden">
                             <input type="text" class="form-control"  aria-describedby="Input_Promo-{{ promo.id }}_help" value="{{ promo.annee }}">
                         </td>
                         <td>
-                            <a id="edit_btn-{{ promo.id }}"  class="btn btn-white btn-md btn-block text-primary" onclick="enableEdit('{% set iid = promo.id | string() %}{{ iid }}', '{% set yearPromo = promo.annee | string() %}{{ yearPromo }}')" >
+                            <a id="edit_btn-{{ promo.id }}"  class="btn btn-white btn-md btn-block text-primary" onclick="enableEditPromo('{% set iid = promo.id | string() %}{{ iid }}', '{% set yearPromo = promo.annee | string() %}{{ yearPromo }}')" >
                                 <i class="bi bi-pencil-fill"></i>
                                 <strong>Edit</strong>
                             </a>
-                            <a id="delete_btn-{{ promo.id }}"  class="btn btn-white btn-md btn-block text-secondary" >
+                            <a id="delete_btn-{{ promo.id }}"  class="btn btn-white btn-md btn-block text-secondary" onclick="deletePromo({{ promo.id }})">
                                 <i class="bi bi-trash"></i>
                                 <strong>Delete</strong>
                             </a>
 
 
-                            <a id="save_btn-{{ promo.id }}" class="btn btn-white btn-md btn-block text-success hidden" onclick="saveChanges('{% set iid = promo.id | string() %}{{ iid }}')" >
+                            <a id="save_btn-{{ promo.id }}" class="btn btn-white btn-md btn-block text-success hidden" onclick="saveChangesPromos('{% set iid = promo.id | string() %}{{ iid }}')" >
                                 <i class="bi bi-save2-fill"></i>
                                 <strong>Save</strong>
                             </a>
                             <a id="discardEdit_btn-{{ promo.id }}" class="btn btn-white btn-md btn-block text-secondary hidden"
-                                onclick="saveChanges('{% set iid = promo.id | string() %}{{ iid }}')">
+                                onclick="saveChangesPromos('{% set iid = promo.id | string() %}{{ iid }}')">
                                 <i class="bi bi-x-lg"></i>
                                 <strong>Discard</strong>
                             </a>
@@ -58,5 +58,23 @@
             </table>
         </div>
     </div>
+    <script>
+        function deletePromo(id) {
+    console.log(id);
+    let el = document.getElementById(`promo-${id}`);
+    let xhr = new XMLHttpRequest();
+    let url = "../../delete/promo";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
 
+    // Create a state change callback
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+        }
+    };
+    var data = JSON.stringify({ "id": id});
+    xhr.send(data);
+    el.classList.add("hidden");
+}
+    </script>
 {% endblock %}
