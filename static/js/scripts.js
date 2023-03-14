@@ -102,6 +102,6 @@ function deleteStudent(id) {
 }
 
 function verifyStudent(student,filter) {
-    return (student.taf1==filter.taf)
+    return (student.taf1==filter.taf || student.taf2==filter.taf)
 }
 

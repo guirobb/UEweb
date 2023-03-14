@@ -19,6 +19,7 @@ function detailed(promo){
         <p>Filter</p>
         <select class="form-select mb-3" aria-label=".form-select" name="select-TAF2" id="select-TAF">
             <option default disabled>Select option</option>
+        <option value="0">Toutes</option>
               {% for tf in taf %}
                 <option value="{{ tf.id }}">{{ tf.name }}</option>
               {% endfor %}
@@ -77,8 +78,9 @@ tafSelect.addEventListener('change', (e) => {
         let el=document.getElementById(`student-${i}`)
         console.log(el.getElementsByClassName("taf1")[0].attributes["value"].value)
         el2 = el.getElementsByClassName("taf1")[0].attributes["value"].value
+        el3 = el.getElementsByClassName("taf2")[0].attributes["value"].value
         console.log(el2)
-        if (el2==value) {
+        if (el2==value || el3==value || value==0) {
             console.log("shown")
             el.classList.remove("hidden");
         }

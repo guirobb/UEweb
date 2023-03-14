@@ -122,13 +122,10 @@ def edit_company():
     return render_template("editTaf.html.jinja2", company=enterp)
 
 
-@app.route('/promo')
-def affiche_promo():
-    print("coucou")
-    promo = request.args.get('promo', default='*', type=int)
-    print(promo)
-    students = db.session.query(User, Promo).join(Promo, User.promo == Promo.id).filter(User.promo == promo)
-    return render_template("listStudents.html.jinja2", students=students)
+@app.route('/admin/promo/list')
+def list_promos():
+    promos = Promo.query.all()
+    return render_template("promotion.html.jinja2", promos=promos)
 
 
 @app.route('/stage')
