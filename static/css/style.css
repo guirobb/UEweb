@@ -114,15 +114,24 @@ html body{
     font-size: 17px !important;
 }
 
-.ts-control{
+.ts-control,
+.ts-control input{
     border: none !important;
-    padding: 4px !important;
+    padding: .195rem !important;
     font-size: 1rem !important;
+    color: #222121 !important;
    
 }
 
-.ts-control input{
-            font-size: 1rem;
-            color: black;
-       
+.ts-control>input{
+    font-size: 1rem !important;
+    color: #222121 !important;
+
+}
+
+.ts-dropdown-content{
+    text-align: left !important;
+    border-radius: 8px !important;
+    color: #222121 !important;
+    font-size: 1rem !important;
 }
