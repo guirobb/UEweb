@@ -249,6 +249,7 @@ def search_enterprise():
 
 @app.route("/add/student", methods=["POST"])
 def addStudent():
+    print("accc")
     first_name = request.form['Input-firstname']
     name = request.form['Input-name']
     nationality = request.form['select-nationality']
@@ -256,9 +257,10 @@ def addStudent():
     taf1 = request.form['select-TAF1']
     taf2 = request.form['select-TAF2']
     promo = request.form['select-Promo']
-    occupation = request.form['Input-Occupation']
-    db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, 0, promo, occupation)
+    account_id = request.form['id_user']
+    db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, 0, promo," occupation")
     student = User.query.filter(User.first_name == first_name, User.name == name, User.taf1 == taf1, User.taf2 == taf2)
+    db_linkAccount(account_id,student[0].id)
     return redirect("http://127.0.0.1:5000/admin/internship/new?studentId="+str(student[0].id))
 
 @app.route("/add/stage", methods=["POST"])
@@ -315,17 +317,21 @@ def checkCreation() :
     i = 0
     j = -1
     id_user = request.args.get('id_user', default='*', type=int)
+    id_account = request.args.get('id_account', default='*', type=int)
     print(users)
     print(len(users))
     while test_presence==False and i < len(users):
-        print(users[i])
+        print(users[i].id)
+        print(id_user)
         if users[i].id == id_user:
             test_presence = True
             redirect("../")
             return render_template("layout.html.jinja2")
+        else :
+            i+=1
     if test_presence == False :
         redirect("../list/students/add")
         taf = Taf.query.all()
         stage = Stage.query.all()
         promo = Promo.query.all()
-        return render_template("addStudent.html.jinja2", taf=taf, stages=stage, promos=promo)
+        return render_template("addStudent.html.jinja2", taf=taf, stages=stage, promos=promo, id_account=id_account)

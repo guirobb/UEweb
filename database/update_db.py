@@ -65,3 +65,8 @@ def db_linkAccount(id, id_user):
     account = Account.query.get(id)
     account.id_user = id_user
     db.session.commit()
+
+def db_linkInternship(id, id_user):
+    user = user.query.get(id_user)
+    user.stage = id
+    db.session.commit()

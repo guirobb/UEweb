@@ -46,7 +46,7 @@
             </div>
           </div>
         </div>
-
+        <input type="hidden" name="id_user" id="id_user">
         <div class="mb-5 wrapper">
           <i class="bi bi-card-text icon text-primary icon-start"></i>
           <div class="main">
@@ -133,5 +133,13 @@
 
        
       </script>
-
+<script>
+    window.onload = function() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const product = urlParams.get('studentId');
+        el = document.getElementById("id_user");
+        el.value = product;
+    }
+    </script>
 {% endblock %}

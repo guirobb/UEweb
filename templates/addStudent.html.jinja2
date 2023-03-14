@@ -8,7 +8,7 @@
         <h1 class="mt-1"><strong></strong> </h1>
     </div>
     <div class="col-md-8 p-3">
-      <form action="http://127.0.0.1:5000/add/student" method="post">
+      <form action="http://127.0.0.1:5000/add/student" method="post"">
         <div class="mb-3">
           <label for="Input-name" class="form-label text-primary">Nom</label>
           <input type="text" class="form-control" name="Input-name" aria-describedby="nameHelp">
@@ -27,6 +27,7 @@
                 <option value="AU">Autres</option>
               </select>
         </div>
+    <input type="hidden" value="" id="id_user" name="id_user">
         <div class="mb-3">
           <label for="Input-Date" class="form-label text-primary">Date</label>
           <input type="date" class="form-control" name="Input-Date">
@@ -69,22 +70,21 @@
               {% endfor %}
           </select>
         </div>
-      <div class="mb-3">
-          <label for="Input-firstname" class="form-label text-primary">Poste actuel</label>
-          <input type="text" class="form-control" name="Input-Occupation" aria-describedby="firstnameHelp" >
-          <div id="fistnameHelp" class="form-text">Edit the Prénom.</div>
-        </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-5">
-          <button type="button" class="btn btn-secondary btn-md">Discard</button>
-          <button type="submit" class="btn btn-primary btn-md" >Save chages</button>
+          <button type="button" class="btn btn-secondary btn-md">Annuler</button>
+          <button type="submit" class="btn btn-primary btn-md" >Création</button>
         </div>
       </form>
     </div>
     </div>
     </div>
-
+    <script>
+    window.onload = function() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const product = urlParams.get('id_account');
+        el = document.getElementById("id_user");
+        el.value = product;
+    }
+    </script>
 {% endblock %}

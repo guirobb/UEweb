@@ -60,6 +60,7 @@
                         </div>
                         {% for account in accounts %}
                             <div id="account-{{ account.id }}" hidden>
+                                <div class="id" value="{{ account.id }}"></div>
                                 <div class="login" value="{{ account.login }}"></div>
                                 <div class="password" value="{{ account.password }}"></div>
                                 <div class="id_user" value="{{ account.id_user }}"></div>
@@ -97,6 +98,7 @@
     while(i<num+1 && test==false) {
         console.log(i)
 		let el=document.getElementById(`account-${i}`);
+        let id = el.getElementsByClassName("id")[0].attributes["value"].value;
 		let login = el.getElementsByClassName("login")[0].attributes["value"].value;
 		let password = el.getElementsByClassName("password")[0].attributes["value"].value;
 		let id_user = el.getElementsByClassName("id_user")[0].attributes["value"].value;
@@ -110,7 +112,7 @@
 
 			form.classList.add('was-validated')
 			console.log("session OK!");
-            window.location.href="../connection?id_user="+
+            window.location.href="../connection?id_user="+id_user+"&id_account="+id;
             return false;
 		}
         else {
