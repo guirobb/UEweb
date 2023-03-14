@@ -132,7 +132,8 @@ def edit_company():
 @app.route('/admin/promo/list')
 def list_promos():
     promos = Promo.query.all()
-    return render_template("promotion.html.jinja2", promos=promos)
+    num= len(promos)
+    return render_template("promotion.html.jinja2", promos=promos,num=num)
 
 
 @app.route('/stage')
@@ -306,3 +307,25 @@ def detailed_student():
     promo = Promo.query.filter(Promo.id==student.promo)[0]
     occupations = Occupation.query.filter(Occupation.id_user==student.id)
     return render_template("detailedStudent.html.jinja2", student=student, taf1=taf1, taf2=taf2, stage=stage, promo=promo, occupations=occupations)
+
+@app.route("/connection")
+def checkCreation() :
+    users = User.query.all()
+    test_presence = False
+    i = 0
+    j = -1
+    id_user = request.args.get('id_user', default='*', type=int)
+    print(users)
+    print(len(users))
+    while test_presence==False and i < len(users):
+        print(users[i])
+        if users[i].id == id_user:
+            test_presence = True
+            redirect("../")
+            return render_template("layout.html.jinja2")
+    if test_presence == False :
+        redirect("../list/students/add")
+        taf = Taf.query.all()
+        stage = Stage.query.all()
+        promo = Promo.query.all()
+        return render_template("addStudent.html.jinja2", taf=taf, stages=stage, promos=promo)

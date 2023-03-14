@@ -16,8 +16,8 @@ function detailed(promo){
 
     <!--ListStudents-->
     <div>
-        <p>Filter</p>
-    <select class="form-select  mb-3" aria-label=".form-select-md" name="select-Promo" id="select-Promo">
+        <label for="promos" class="form-label text-primary">Promo</label>
+    <select class="form-select  mb-3 promos" aria-label=".form-select-md" name="select-Promo" id="select-Promo">
             <option default disabled>Select option</option>
             <option value="-1">Toutes</option>
               {% for promo in promos %}
@@ -26,7 +26,7 @@ function detailed(promo){
           </select>
 
          <div class="mb-3">
-          <label for="select-TAF1" class="form-label text-primary">Promo</label>
+          <label for="select-TAF1" class="form-label text-primary">Taf</label>
          <form id="select-TAF">
              <select class="form-select mb-3" aria-label=".form-select" name="selecter-TAF" id="selecter-TAF">
             <option default disabled>Select option</option>

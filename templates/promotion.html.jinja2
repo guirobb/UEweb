@@ -20,7 +20,7 @@
                     <tr>
                         <th style="width:3%">ID</th>
                         <th style="width:75%">Années</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-center" id="actions">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,6 +75,29 @@
     var data = JSON.stringify({ "id": id});
     xhr.send(data);
     el.classList.add("hidden");
+}
+    </script>
+    <script>
+    window.onload = function ea(e) {
+    var num = "{{num}}"
+    for (let i = 1; i < num+1; i++) {
+        let el=document.getElementById(`promo-${i}`)
+        let el2=document.getElementById('actions')
+        roleuser = window.localStorage.getItem("role")
+        console.log(roleuser)
+        if (roleuser=="admin") {
+            console.log("coucou")
+            el.getElementsByClassName("btn")[0].style.visibility = 'visible';
+            el.getElementsByClassName("btn")[1].style.visibility = 'visible';
+            el2.classList.remove("hidden")
+        }
+        else {
+            console.log("caché")
+            el.getElementsByClassName("btn")[0].style.visibility = 'hidden';
+            el.getElementsByClassName("btn")[1].style.visibility = 'hidden';
+            el2.classList.add("hidden")
+        }
+    }
 }
     </script>
 {% endblock %}

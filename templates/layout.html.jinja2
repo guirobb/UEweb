@@ -113,13 +113,11 @@
             let promolist = document.getElementById("promo-list");
             let role = window.localStorage.getItem("role");
             if (role=="admin") {
-                console.log("yeaahhh")
                 taflist.classList.remove("hidden");
                 enterpriselist.classList.remove("hidden");
                 promolist.classList.remove("hidden");
             }
             else {
-                console.log("ooohhhhh")
                 taflist.classList.add("hidden");
                 promolist.classList.add("hidden");
                 enterpriselist.classList.add("hidden");

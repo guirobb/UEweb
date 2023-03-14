@@ -43,8 +43,25 @@ def db_updateOccupation(id, title, description, start_date, organisation):
     occupation.organisation = organisation
     db.session.commit()
 
-def db_updatePromo(id, annee) :
+
+def db_updatePromo(id, annee):
     print("db_updatePromo")
     promo = Promo.query.get(id)
     promo.annee = annee
+    db.session.commit()
+
+
+def db_updateAccount(id, login, password, role, id_user):
+    print("db_updateAccount")
+    account = Account.query.get(id)
+    account.login = login
+    account.password = password
+    account.role = role
+    account.id_user = id_user
+    db.session.commit()
+
+
+def db_linkAccount(id, id_user):
+    account = Account.query.get(id)
+    account.id_user = id_user
     db.session.commit()

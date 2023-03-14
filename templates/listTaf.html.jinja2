@@ -39,7 +39,7 @@
                     <input type="text" class="form-control" aria-describedby="Input_TAFDirector-{{ taf.director }}_help" value="{{ taf.director }}">
                 </td>
 
-                <td>
+                <td class="button_bar">
                     <a id="edit_btn-{{ taf.id }}" class="btn btn-white btn-md btn-block text-primary" onclick="enableEdit('{% set iid = taf.id | string() %}{{ iid }}', '{% set nameTaf = taf.name | string() %}{{ nameTaf }}')">
                         <i class="bi bi-pencil-fill"></i>
                         <strong>Edit</strong>

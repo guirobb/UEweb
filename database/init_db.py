@@ -47,7 +47,7 @@ def create_test_db():
     user1 = Account(login="matt18",password="1234",role="admin",id_user=3)
     user2 = Account(login="laura17",password="1234",role="user",id_user=2)
     user3 = Account(login="sam17", password="1234",role="user",id_user=1)
-    user4 = Account(login="marisha20", password="1234",role="user", id_user=1)
+    user4 = Account(login="marisha20", password="1234",role="user")
     db.session.add(user1)
     db.session.add(user2)
     db.session.add(user3)
