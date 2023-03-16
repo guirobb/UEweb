@@ -40,15 +40,15 @@
                       <i class="bi bi-person-circle font-2"></i>
                   </button>
                   <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Bonjour <strong>Utilisateur</strong> !</a></li>
+                      <li><a class="dropdown-item" href="#">Bonjour <strong id="nom_user">Utilisateur</strong> !</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="/list/students">Élèves</a></li>
-                      <li><a class="dropdown-item taf-list" href="/admin/taf/list">TAFs</a></li>
-                      <li><a class="dropdown-item enterprise-list" href="/admin/companies/list">Entreprises</a></li>
-                      <li><a class="dropdown-item promo-list" href="/admin/promo/list">Promotion</a></li>
+                      <li><a class="dropdown-item" href="/admin/taf/list" id="taf-list">TAFs</a></li>
+                      <li><a class="dropdown-item" href="/admin/companies/list" id="enterprise-list">Entreprises</a></li>
+                      <li><a class="dropdown-item" href="/admin/promo/list" id="promo-list">Promotion</a></li>
                       <li><a class="dropdown-item" href="/admin/internship/new">Créer Stage</a></li>
                       <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Log out</a></li>
+                      <li><a class="dropdown-item" href="/login">Log out</a></li>
                   </ul>
               </div>
               <div class="btn-group noSessionActive" style="margin-right: 4rem;">
@@ -105,6 +105,25 @@
     <script src="{{ url_for("static", filename="js/scripts.js") }}"></script>
     <script src="{{ url_for("static", filename="vendor/bootstrap/js/bootstrap.min.js") }}"></script>
     <script src="{{ url_for("static", filename="vendor/tom-selectJS/tom-select.complete.js") }}"></script>
-    
+    <script>
+        const menu = document.getElementById("dropdown");
+        menu.onclick= function() {
+            let taflist = document.getElementById("taf-list");
+            let enterpriselist = document.getElementById("enterprise-list");
+            let promolist = document.getElementById("promo-list");
+            let role = window.localStorage.getItem("role");
+            if (role=="admin") {
+                taflist.classList.remove("hidden");
+                enterpriselist.classList.remove("hidden");
+                promolist.classList.remove("hidden");
+            }
+            else {
+                taflist.classList.add("hidden");
+                promolist.classList.add("hidden");
+                enterpriselist.classList.add("hidden");
+            }
+
+        }
+    </script>
 </body>
 </html>
