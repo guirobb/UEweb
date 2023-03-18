@@ -51,7 +51,6 @@ class User(db.Model):
     taf2 = db.Column(db.Integer, db.ForeignKey('Taf.id'))
     stage = db.Column(db.Integer, db.ForeignKey('Stage.id'))
     promo = db.Column(db.Integer, db.ForeignKey('Promo.id'))
-    role= db.Column(db.Text)
 
 class Occupation(db.Model):
     __tablename__ = "Occupation"

@@ -27,14 +27,14 @@ app.config[
 
 db.init_app(app)
 with app.test_request_context():  # (2) bloc exécuté à l'initialisation de Flask
-    init_database()
-    create_test_db()
+    print("coucou")
 
 
 # @app.route("/clean")
 def clean():
     db.drop_all()
     db.create_all()
+    create_test_db()
     return "Cleaned!"
 
 
@@ -53,7 +53,7 @@ def list_all_companies():
 
 @app.route('/')
 def index():
-    create_test_db()
+
     return render_template("layout.html.jinja2")
 
 
