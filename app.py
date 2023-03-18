@@ -296,9 +296,20 @@ def addStage():
     date_end = request.form["Input-date-end"]
     resume = request.form["Input-resumeStage"]
     rapport = request.form["Input-reportStage"]
-    tutor = request.form["select-tutor"]
+    checked = request.form.getlist("checkbox")
     enterprise = request.form["select-enterprise"]
-    db_addStage(title, date_start, date_end, resume, rapport, tutor, enterprise)
+    if len(checked) > 0:
+        name = request.form["Input-nameTutor"]
+        first_name = request.form["Input-firstnameTutor"]
+        number = request.form["Input-numberTutor"]
+        email = request.form["Input-emailTutor"]
+        db_addTutor(name,first_name,number,email)
+        tutors = Tutor.query.all()
+        tutor = tutors[len(tutors)-1].id
+        db_addStage(title, date_start, date_end, resume, rapport, tutor, enterprise)
+    else :
+        tutor = request.form["select-tutor"]
+        db_addStage(title, date_start, date_end, resume, rapport, tutor, enterprise)
     stage = Stage.query.all()
     student = User.query.all()
     student[len(student) - 1].stage = stage[len(stage) - 1].id
