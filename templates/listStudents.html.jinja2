@@ -73,7 +73,7 @@ function detailed(promo){
                 <div hidden class="name" value="{{ student[0].name }}"></div>
               <a class="nav-link"  href="../promo?promo={{ student[0].promo }}" value="{{ student[0].promo }}">Promotion : {{ student[1].annee }}</a>
                 <a class="promoyear" hidden id="promoyear" value="{{ student[1].annee }}"></a>
-              <p class="text-muted font-size-sm">Poste actuel : {{ student[0].occupation }}</p>
+              <p class="text-muted font-size-sm">Poste actuel : {{ occupations[student[0].id-1].title }}</p>
             </div>
             <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-center border_bottom-rounded no-border button_bar">
               <a class="btn btn-light btn-md btn-block text-primary edit_button" href="/list/students/edit?id={{ student[0].id }}">

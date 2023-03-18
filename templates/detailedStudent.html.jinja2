@@ -1,7 +1,7 @@
 {% extends "layout.html.jinja2" %}
 {% block body %}
 <div class="container">
-<div class="card"
+<div class="card">
 <p>Prénom : {{ student.first_name }} </p>
 <p>Nom: {{ student.name }}</p>
     <p>Promo : {{ promo.annee }}</p>
@@ -11,7 +11,31 @@
 <p>Intitulé de Stage: {{ stage.title }}</p>
 <p>Résumé : {{ stage.resume }}</p>
     {% for occupation in occupations %}
-        <p>{{ occupation.title }}</p>
-        <p>{{ occupation.start_date }}
+        <div id="occupation-{{ occupation.id }}">
+            <p>{{ occupation.title }}</p>
+            <p>{{ occupation.start_date }}<p>
+            <button onclick="deleteOccupation({{ occupation.id }})"> Delete </button>
+        </div>
     {% endfor %}
+</div>
+</div>
+<script>
+    function deleteOccupation(id) {
+        console.log(id);
+        let el = document.getElementById(`occupation-${id}`);
+        let xhr = new XMLHttpRequest();
+        let url = "../../delete/occupation";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        // Create a state change callback
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+            }
+        };
+        var data = JSON.stringify({ "id": id});
+        xhr.send(data);
+        el.classList.add("hidden");
+    }
+</script>
 {% endblock %}

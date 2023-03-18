@@ -79,14 +79,15 @@ def test():
 @app.route('/list/students')
 def students():
     students = db.session.query(User, Promo, Stage).join(Promo, Stage).all()
-    for student in students:
-        occupations = Occupation.query.filter(Occupation.id_user == student[0].id)
+    print(students)
     taf = Taf.query.all()
     num = len(students)
     promos = Promo.query.all()
     enterprises = Organisation.query.all()
+    occupations= Occupation.query.join(User).filter(Occupation.active == 1).all()
+    print(occupations)
     return render_template("listStudents.html.jinja2", students=students, taf=taf, filter=Filter(), num=num,
-                           promos=promos, companies=enterprises)
+                           promos=promos, companies=enterprises, occupations=occupations)
 
 
 @app.route('/list/students/edit')
@@ -206,6 +207,12 @@ def deleteTaf():
 def deletePromo():
     id = request.json['id']
     db_deletePromo(id)
+    return redirect("http://127.0.0.1:5000/list/students")
+
+@app.route("/delete/occupation/", methods=["POST"])
+def deleteJob():
+    id = request.json['id']
+    db_deleteOccupation(id)
     return redirect("http://127.0.0.1:5000/list/students")
 
 
