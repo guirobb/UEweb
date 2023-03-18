@@ -2,12 +2,12 @@ from database.models import *
 from datetime import datetime
 
 
-def db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, stage, promo, occupation):
+def db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, stage, promo):
     birth_date2 = datetime.strptime(birth_date,
                                     '%Y-%m-%d')
     student = User(first_name=first_name, name=name, nationality=nationality, birth_date=birth_date2, taf1=taf1,
                    taf2=taf2,
-                   stage=stage, promo=promo, occupation=occupation, role="user")
+                   stage=stage, promo=promo, role="user")
     print(student)
     db.session.add(student)
     print(db.session.commit())

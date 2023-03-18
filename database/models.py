@@ -51,7 +51,6 @@ class User(db.Model):
     taf2 = db.Column(db.Integer, db.ForeignKey('Taf.id'))
     stage = db.Column(db.Integer, db.ForeignKey('Stage.id'))
     promo = db.Column(db.Integer, db.ForeignKey('Promo.id'))
-    occupation= db.Column(db.Text)
     role= db.Column(db.Text)
 
 class Occupation(db.Model):
@@ -59,9 +58,11 @@ class Occupation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text)
     description = db.Column(db.Text)
-    start_date = db.Column(db.Integer)
+    start_date = db.Column(db.DateTime)
+    end_date = db.Column(db.DateTime)
     id_user = db.Column(db.Integer, db.ForeignKey('User.id'))
     organisation = db.Column(db.Integer, db.ForeignKey('Organisation.id'))
+    active = db.Column(db.Integer)
 
 class Filter :
     def __init__(self):
