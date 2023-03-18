@@ -201,6 +201,12 @@ def deleteTaf():
     id = request.json['id']
     db_deleteTaf(id)
     return redirect("http://127.0.0.1:5000/list/students")
+@app.route("/create/enterprise/", methods=["POST"])
+def addEnterprise():
+    name = request.json["name"]
+    print(name)
+    db_addEnterprise(name)
+    return redirect("http://127.0.0.1:5000/list/students")
 
 
 @app.route("/delete/promo/", methods=["POST"])
@@ -323,13 +329,6 @@ def addJob():
 
 
     db.session.commit()
-    return redirect("http://127.0.0.1:5000/list/students")
-
-
-@app.route("/add/enterprise", methods=["POST"])
-def addEnterprise():
-    name = request.form['Input-name']
-    db_addEnterprise(name)
     return redirect("http://127.0.0.1:5000/list/students")
 
 

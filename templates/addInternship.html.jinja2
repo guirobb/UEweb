@@ -123,7 +123,13 @@
               direction: "asc"
             },
             onOptionAdd:function(value, data){
-              console.log(data); // company data to add
+              console.log(data.value); // company data to add
+                let xhr = new XMLHttpRequest();
+                let url = "../../create/enterprise";
+                xhr.open("POST", url, true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                var data2 = JSON.stringify({ "name": data.value});
+                xhr.send(data2);
               
 
             }
