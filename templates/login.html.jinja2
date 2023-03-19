@@ -106,9 +106,9 @@
 		if (login==testlogin && testpassword==password) {
 			test= true;
             console.log("yes");
-			localStorage.setItem("id_user",id_user);
-			localStorage.setItem("role",role);
-            localStorage.setItem("sessionID",btoa("Session active!!!!!"));
+			sessionStorage.setItem("id_user",id_user);
+			sessionStorage.setItem("role",role);
+            sessionStorage.setItem("sessionID",btoa("Session active!!!!!"));
 
 			form.classList.add('was-validated')
 			console.log("session OK!");

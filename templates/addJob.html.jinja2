@@ -1,0 +1,110 @@
+{% extends "layout.html.jinja2" %}
+
+{% block body %}
+    <div class="container">
+
+    <h1 class="text-dark text-center mt-4"><strong>Créer une nouvelle occupation</strong></h1>
+   <div class="row g-0 align-items-center">
+    <div class="col-md-2 pt-3 text-center">
+    </div>
+    <div class="col-md-8 p-3">
+    <div class="card p-5 no-border border-rounded " >
+        <form action="http://127.0.0.1:5000/add/occupation" method="post">
+        <input type="hidden" value="{{ id_user }}" name="id_user" class="id_user">
+        <div class="text-center col-12 mb-5">
+            {% for user in students %}
+            <span style="font-size: 17px;"></span>
+            <span class="badge rounded-pill text-bg-primary badge-lg">
+                <i class="bi bi-person-circle badge-icon"></i>
+                <b style="margin-top:0%;">{{user.first_name}} {{user.name}}</b>
+            </span>
+            {% endfor %}
+        </div>
+        <div class="mb-5 wrapper">
+          <i class="bi bi-person-workspace icon text-primary icon-start"></i>
+          <div class="main">
+            <label for="Input-nameStage" class="form-label form-label-left text-primary">Intitulé de poste</label>
+            <input type="text" class="form-control" name="Input-nameStage" aria-describedby="nameHelp">
+            <div id="nameHelp" class="form-text"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6 mb-5 wrapper">
+            <i class="bi bi-calendar3 icon text-primary icon-start"></i>
+            <div class="main">
+              <label for="Input-date-start" class="form-label text-primary form-label-left">Début</label>
+              <input type="date" class="form-control" name="Input-date-start" aria-describedby="dateStartHelp" >
+              <div id="dateStartHelp" class="form-text"></div>
+            </div>
+          </div>
+          <div class="col-sm-6 mb-5 wrapper">
+            <i class="bi bi-calendar3 icon text-primary icon-start"></i>
+            <div class="main" >
+              <label for="Input-date-end" class="form-label text-primary form-label-left">Fin</label>
+              <input type="date" class="form-control" name="Input-date-end" aria-describedby="dateEndHelp" id="endDate">
+                <input class="form-check-input" type="checkbox" id="checkbox" name="checkbox" value="true">
+            <label class="form-check-label" for="flexCheckDefault">
+            Emploi actuel
+            </label>
+              <div id="dateEndHelp" class="form-text"></div>
+            </div>
+
+          </div>
+            <div class="mb-5 wrapper">
+          <i class="bi bi-card-text icon text-primary icon-start"></i>
+          <div class="main">
+            <label for="Input-resumeStage" class="form-label form-label-left text-primary">Desciption</label>
+            <textarea type="text" class="form-control" name="Input-resumeStage" style="height:150px;" aria-describedby="resumeHelp"></textarea>
+            <div id="resumeHelp" class="form-text"></div>
+          </div>
+        </div>
+        </div>
+
+          <div class="mb-5 wrapper">
+            <i class="bi bi-buildings icon text-primary icon-start"></i>
+            <div class="main">
+              <label for="select-enterprise" class="form-label text-primary form-label-left">Entreprise</label>
+              <select class="form-select mb-3"  id="select-company" aria-label=".form-select" name="select-enterprise" autocomplete="off">
+                <option value="">Sélectionner ou taper l'entreprise</option>
+                {% for enterprise in companies %}
+                <option value="{{ enterprise.id }}">{{enterprise.id}} - {{ enterprise.name.upper() }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+        {# <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div> #}
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-5">
+          <button type="button" class="btn btn-secondary btn-md">Discard</button>
+          <button type="submit" class="btn btn-primary btn-md" >Save chages</button>
+        </div>
+      </form>
+
+
+    </div>
+
+    </div>
+    </div>
+    </div>
+
+    <script>
+    let checkBox = document.getElementById("checkbox");
+    let el2 = document.getElementById("endDate");
+    checkBox.addEventListener('change', (e) => {
+
+      console.log(checkBox.checked)
+        if (checkBox.checked) {
+            el2.style.display="none";
+        }
+        else {
+            el2.style.display = "initial";
+        }
+    })
+
+    </script>
+{% endblock %}
+

@@ -69,8 +69,8 @@
             let noSessEls = document.getElementsByClassName("noSessionActive");
 
             const dataStorage = {
-               isAdmin: localStorage.getItem("isAdmin"),
-               sessionID:localStorage.getItem("sessionID")
+               isAdmin: sessionStorage.getItem("isAdmin"),
+               sessionID:sessionStorage.getItem("sessionID")
             };
 
             console.log(sessEls)
@@ -111,7 +111,7 @@
             let taflist = document.getElementById("taf-list");
             let enterpriselist = document.getElementById("enterprise-list");
             let promolist = document.getElementById("promo-list");
-            let role = window.localStorage.getItem("role");
+            let role = window.sessionStorage.getItem("role");
             if (role=="admin") {
                 taflist.classList.remove("hidden");
                 enterpriselist.classList.remove("hidden");

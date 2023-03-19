@@ -50,6 +50,12 @@ function detailed(promo){
                 {% endfor %}
               </select>
             </div>
+    <form id="select-name">
+        <label for="firstname">Prénom</label>
+         <input type="text" id="firstname" name="firstname" class="firstname">
+         <label for="firstname">Nom</label>
+         <input type="text" id="name" name="name" class="name">
+    </form>
     </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 m-4">
         {% for student in students %}
@@ -63,19 +69,26 @@ function detailed(promo){
             <div class="card-body text-center no-border">
               <img src="https://bootdey.com/img/Content/avatar/avatar1.png" style="width:100px;margin-top:-65px" alt="User" class="img-fluid img-thumbnail rounded-circle border-0 mb-3">
               <h5 class="card-title" onclick="detailed({{ student[0].id }})"><strong>{{ student[0].first_name }} {{ student[0].name}}</strong> </h5>
-              <a class="nav-link"  href="../promo?promo={{ student[0].promo }}" value="{{ student[0].promo }}">Promotion : {{ student[1].annee }}</a>
+                <div hidden class="firstname" value="{{ student[0].first_name }}"></div>
+                <div hidden class="name" value="{{ student[0].name }}"></div>
+              <a class="nav-link" value="{{ student[0].promo }}">Promotion : {{ student[1].annee }}</a>
                 <a class="promoyear" hidden id="promoyear" value="{{ student[1].annee }}"></a>
-              <p class="text-muted font-size-sm">Poste actuel : {{ student[0].occupation }}</p>
+              {# <p class="text-muted font-size-sm">Poste actuel :  {{ occupations[student[0].id-1].title }} </p>#}
             </div>
             <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-center border_bottom-rounded no-border button_bar">
               <a class="btn btn-light btn-md btn-block text-primary edit_button" href="/list/students/edit?id={{ student[0].id }}">
                   <i class="bi bi-pencil-fill"></i>
                   <strong>Edit</strong>
               </a>
-              <button class="btn btn-light btn-md text-secondary" onclick="deleteStudent({{ student[0].id }})">
+                <a class="btn btn-light btn-md btn-block text-primary job_button" href="/list/occupation/add?studentId={{ student[0].id }}">
+                  <i class="bi bi-pencil-fill"></i>
+                  <strong>Ajouter Occupation</strong>
+              </a>
+              <button class="btn btn-light btn-md text-secondary btndelete" onclick="deleteStudent({{ student[0].id }})">
                   <i  class="bi bi-trash"></i>
                   <strong>Delete</strong>
               </button>
+
             </div>
           </div>
 
@@ -160,13 +173,21 @@ window.onload = function ea(e) {
     var num = "{{num}}"
     for (let i = 1; i < num+1; i++) {
         let el=document.getElementById(`student-${i}`)
-        roleuser = window.localStorage.getItem("role")
+        roleuser = window.sessionStorage.getItem("role")
         console.log(roleuser)
+        iduser = window.sessionStorage.getItem("id_user")
         if (roleuser=="admin") {
-            el.getElementsByClassName("button_bar")[0].style.visibility = 'visible';
+            el.getElementsByClassName("job_button")[0].style.display = 'none';
         }
         else {
-            el.getElementsByClassName("button_bar")[0].style.visibility = 'hidden';
+            if (i==iduser)
+                {
+                    el.getElementsByClassName("btndelete")[0].style.display = 'none';
+                }
+            else {
+                el.getElementsByClassName("button_bar")[0].style.visibility = 'hidden';
+            }
+
         }
     }
 }
@@ -189,6 +210,25 @@ selectEnterprise.addEventListener('change', (e) => {
         }
     }
 })
+
+const nameSelect = document.getElementById("select-name")
+nameSelect.addEventListener('change',(e) =>{
+    console.log("coucou")
+    firstname= document.getElementById("firstname").value
+    name=document.getElementById("name").value
+    var num = "{{num}}"
+    for (let i = 1; i < num+1; i++) {
+        let el = document.getElementById(`student-${i}`)
+        stfirstname = el.getElementsByClassName('firstname')[0].attributes["value"].value
+        stname = el.getElementsByClassName('firstname')[0].attributes["value"].value
+        if (stname.includes(name) && stfirstname.includes(firstname)) {
+            el.classList.remove("hidden");
+        }
+        else {
+            el.classList.add("hidden");
+        }
+    }
+    })
 </script>
 {% endblock %}
 
