@@ -135,3 +135,10 @@ html body{
     color: #222121 !important;
     font-size: 1rem !important;
 }
+
+.accordion-button:not(.collapsed) {
+    background: transparent !important;
+}
+
+
+
