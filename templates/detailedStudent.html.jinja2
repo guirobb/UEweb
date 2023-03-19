@@ -71,22 +71,28 @@
 
                     <div class="ms-2 me-auto">
                         <h5 class="fw-bold me-2 mb-0">{{ occupation.title }}</h5>
-                       <span class="text-secondary h6">{{ occupation.company.name}} ({{ occupation.start_date[:10] }})</span>
+                       <span class="text-secondary h6">{{ occupation.company.name}} ({% set startC = occupation.start_date | string() %}{{ startC[:10] }})</span>
                         <p class="text-dark p"><b>Description: </b> {{ occupation.description}}</p>
 
                     </div>
 					
 					{%  if occupation.active==1 %}
                      <div id="occupation-{{ occupation.id }}">
-                        <p style="font-weight: bold">{{ occupation.title }}</p>
-                        <p>{{ occupation.start_date.strftime('%d-%m-%Y') }}<p>
-                        <button onclick="deleteOccupation({{ occupation.id }})"> Delete </button>
+                        {# <p style="font-weight: bold">{{ occupation.title }}</p> #}
+                        {# <p>{{ occupation.start_date.strftime('%d-%m-%Y') }}<p> #}
+                        <button class="btn btn-light text-danger"  onclick="deleteOccupation({{ occupation.id }})">
+                        <i class="bi bi-trash"></i>
+                            Delete
+                        </button>
                     </div>
                     {%  else %}
                         <div id="occupation-{{ occupation.id }}">
-                            <p>{{ occupation.title }}</p>
-                        <p>{{ occupation.start_date.strftime('%d-%m-%Y') }}<p>
-                        <button onclick="deleteOccupation({{ occupation.id }})"> Delete </button>
+                            {# <p>{{ occupation.title }}</p> #}
+                        {# <p>{{ occupation.start_date.strftime('%d-%m-%Y') }}<p> #}
+                        <button class="btn btn-light text-danger" onclick="deleteOccupation({{ occupation.id }})">
+                            <i class="bi bi-trash"></i>
+                            Delete
+                        </button>
                     </div>
                     {%  endif %}
 					
