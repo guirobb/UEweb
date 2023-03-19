@@ -2,12 +2,12 @@ from database.models import *
 from datetime import datetime
 
 
-def db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, stage, promo, occupation):
+def db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, stage, promo):
     birth_date2 = datetime.strptime(birth_date,
                                     '%Y-%m-%d')
     student = User(first_name=first_name, name=name, nationality=nationality, birth_date=birth_date2, taf1=taf1,
                    taf2=taf2,
-                   stage=stage, promo=promo, occupation=occupation, role="user")
+                   stage=stage, promo=promo, role="user")
     print(student)
     db.session.add(student)
     print(db.session.commit())
@@ -42,8 +42,8 @@ def db_addTutor(name, first_name, number, mail, enterprise):
     db.session.commit()
 
 
-def db_addOccupation(title, description, start_date, id_user, organisation):
+def db_addOccupation(title, description, start_date, id_user, organisation,active):
     start_date2 = datetime.strptime(start_date, '%Y-%m-%d')
     db.session.add(Occupation(title=title, description=description, start_date=start_date2, id_user=id_user,
-                              organisation=organisation))
+                              organisation=organisation,active=active))
     db.session.commit()

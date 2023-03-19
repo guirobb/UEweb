@@ -67,18 +67,49 @@
         </div>
 
         <div class="mb-5 wrapper">
-          <i class="bi bi-person-video2 icon text-primary icon-start"></i>
+          <i class="bi bi-person-video2 icon text-primary icon-start" id="tutor-im"></i>
           <div class="main">
-            <label for="select-tutor" class="form-label text-primary form-label-left">Tuteur</label>
-            <select class="form-select mb-3" aria-label=".form-select" name="select-tutor">
+            <label for="select-tutor" class="form-label text-primary form-label-left" id="tutor-title">Tuteur</label>
+            <select class="form-select mb-3" aria-label=".form-select" name="select-tutor" id="select-tutor">
               <option default disabled selected>Sélectionner</option>
               {% for tutor in tutors %}
               <option value="{{ tutor.id }}">{{ tutor.name.upper() }} {{ tutor.first_name }}</option>
               {% endfor %}
             </select>
+          <input class="form-check-input" type="checkbox" id="checkbox" name="checkbox" value="true">
+            <label class="form-check-label" for="flexCheckDefault">
+            Créer un Tuteur
+            </label>
           </div>
         </div>
-
+        <div class="mb-5 wrapper" id="tutor-name" style="display: none">
+          <div class="main">
+            <label for="Input-nameStage" class="form-label form-label-left text-primary">Nom</label>
+            <input type="text" class="form-control" name="Input-nameTutor" aria-describedby="nameHelp">
+            <div id="nameHelp" class="form-text"></div>
+          </div>
+        </div>
+        <div class="mb-5 wrapper" id="tutor-first_name" style="display: none">
+          <div class="main">
+            <label for="Input-nameStage" class="form-label form-label-left text-primary">Prénom</label>
+            <input type="text" class="form-control" name="Input-firstnameTutor" aria-describedby="nameHelp">
+            <div id="nameHelp" class="form-text"></div>
+          </div>
+        </div>
+        <div class="mb-5 wrapper" id="tutor-number" style="display: none">
+          <div class="main">
+            <label for="Input-nameStage" class="form-label form-label-left text-primary">Numéro de Téléphone</label>
+            <input type="text" class="form-control" name="Input-numberTutor" aria-describedby="nameHelp">
+            <div id="nameHelp" class="form-text"></div>
+          </div>
+        </div>
+        <div class="mb-5 wrapper" id="tutor-email" style="display: none">
+          <div class="main">
+            <label for="Input-nameStage" class="form-label form-label-left text-primary">Email du tuteur</label>
+            <input type="text" class="form-control" name="Input-emailTutor" aria-describedby="nameHelp">
+            <div id="nameHelp" class="form-text"></div>
+          </div>
+        </div>
           <div class="mb-5 wrapper">
             <i class="bi bi-buildings icon text-primary icon-start"></i>
             <div class="main">
@@ -123,7 +154,13 @@
               direction: "asc"
             },
             onOptionAdd:function(value, data){
-              console.log(data); // company data to add
+              console.log(data.value); // company data to add
+                let xhr = new XMLHttpRequest();
+                let url = "../../create/enterprise";
+                xhr.open("POST", url, true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                var data2 = JSON.stringify({ "name": data.value});
+                xhr.send(data2);
               
 
             }
@@ -142,4 +179,38 @@
         el.value = product;
     }
     </script>
+    <script>
+    let checkBox = document.getElementById("checkbox");
+    let el2 = document.getElementById("select-tutor");
+    let el3 = document.getElementById("tutor-name");
+    let el4 = document.getElementById("tutor-first_name");
+    let el5 = document.getElementById("tutor-number");
+    let el6 = document.getElementById("tutor-email");
+    let el7 = document.getElementById("tutor-title");
+    let el8 = document.getElementById("tutor-im");
+    checkBox.addEventListener('change', (e) => {
+
+      console.log(checkBox.checked)
+        if (checkBox.checked) {
+            el2.style.display="none";
+            el7.style.display="none";
+            el8.style.display="none";
+            el3.style.display= "contents";
+            el4.style.display= "contents";
+            el5.style.display= "contents";
+            el6.style.display= "contents";
+        }
+        else {
+            el2.style.display = "initial";
+            el7.style.display = "initial";
+            el8.style.display = "initial";
+            el3.style.display= "none";
+            el4.style.display= "none";
+            el5.style.display= "none";
+            el6.style.display= "none";
+        }
+    })
+
+    </script>
+
 {% endblock %}

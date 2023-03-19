@@ -278,9 +278,9 @@ function deleteTaf(id) {
 }
 
 function becomeUser() {
-    localStorage.setItem("role","user");
+    sessionStorage.setItem("role","user");
 }
 
 function becomeAdmin() {
-    localStorage.setItem("role","admin");
+    sessionStorage.setItem("role","admin");
 }

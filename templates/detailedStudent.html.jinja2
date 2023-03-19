@@ -16,6 +16,7 @@
         <h1 class="mt-3"><strong>{{student.first_name}} {{student.name}}</strong> </h1>
         <h4 class="text-primary">{{student.occupation}}</h4>
     </div>
+	
     <div class="col-md-8 p-1">
         <h6 class="ms-1 text-primary fw-bold">Thématiques d’approfondissement choisis</h6>
         <div class="col-12 card p-3 mb-5" style="border: none; border-radius: 15px; width: 100%">
@@ -74,6 +75,21 @@
                         <p class="text-dark p"><b>Description: </b> {{ occupation.description}}</p>
 
                     </div>
+					
+					{%  if occupation.active==1 %}
+                     <div id="occupation-{{ occupation.id }}">
+                        <p style="font-weight: bold">{{ occupation.title }}</p>
+                        <p>{{ occupation.start_date.strftime('%d-%m-%Y') }}<p>
+                        <button onclick="deleteOccupation({{ occupation.id }})"> Delete </button>
+                    </div>
+                    {%  else %}
+                        <div id="occupation-{{ occupation.id }}">
+                            <p>{{ occupation.title }}</p>
+                        <p>{{ occupation.start_date.strftime('%d-%m-%Y') }}<p>
+                        <button onclick="deleteOccupation({{ occupation.id }})"> Delete </button>
+                    </div>
+                    {%  endif %}
+					
                 </li>
                 {% endfor %}
 
@@ -83,4 +99,25 @@
 
 </div>
 </div>
+
+</div>
+<script>
+    function deleteOccupation(id) {
+        console.log(id);
+        let el = document.getElementById(`occupation-${id}`);
+        let xhr = new XMLHttpRequest();
+        let url = "../../delete/occupation";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        // Create a state change callback
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+            }
+        };
+        var data = JSON.stringify({ "id": id});
+        xhr.send(data);
+        el.classList.add("hidden");
+    }
+</script>
 {% endblock %}
