@@ -21,56 +21,55 @@
             <li class="list-group-item d-flex justify-content-between align-items-start border border-0">
             
                 <div class="ms-2 me-auto">
-                    <div class="fw-bold">Subheading</div>
-                    Content for list item
+                    <div class="fw-bold">{{ student.first_name }} {{ student.name }}</div>
+                    Promo : {{ promo.annee }}
                 </div>
             
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-start border border-0">
             
-                A second item
+                Taf 1 : {{ taf1.name }}
             
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-start border border-0">
-            
-                A third item
-            
+
+                Taf 2 : {{ taf2.name }}
+
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-start border border-0">
-            
-                A fourth item
-            
+
+                Intitulé de Stage: {{ stage.title }}
+
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-start border border-0">
-            
-                And a fifth one
-            
+
+                Résumé : {{ stage.resume }}
+
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start border border-0">
+
+                {% for occupation in occupations %}
+                    {%  if occupation.active==1 %}
+                     <div id="occupation-{{ occupation.id }}">
+                        <p style="font-weight: bold">{{ occupation.title }}</p>
+                        <p>{{ occupation.start_date.strftime('%d-%m-%Y') }}<p>
+                        <button onclick="deleteOccupation({{ occupation.id }})"> Delete </button>
+                    </div>
+                    {%  else %}
+                        <div id="occupation-{{ occupation.id }}">
+                            <p>{{ occupation.title }}</p>
+                        <p>{{ occupation.start_date.strftime('%d-%m-%Y') }}<p>
+                        <button onclick="deleteOccupation({{ occupation.id }})"> Delete </button>
+                    </div>
+                    {%  endif %}
+                {% endfor %}
+
             </li>
         </ul>
     </div>
 </div>
 
-<div class="card"
 
-
-
-<p>Prénom : {{ student.first_name }} </p>
-<p>Nom: {{ student.name }}</p>
-    <p>Promo : {{ promo.annee }}</p>
-<p>Poste actuel: {{ student.occupation }}</p>
-<p>Taf 1 : {{ taf1.name }}</p>
-<p>Taf 2 : {{ taf2.name }}</p>
-<p>Intitulé de Stage: {{ stage.title }}</p>
-<p>Résumé : {{ stage.resume }}</p>
-
-    {% for occupation in occupations %}
-        <div id="occupation-{{ occupation.id }}">
-            <p>{{ occupation.title }}</p>
-            <p>{{ occupation.start_date }}<p>
-            <button onclick="deleteOccupation({{ occupation.id }})"> Delete </button>
-        </div>
-    {% endfor %}
-</div>
 </div>
 <script>
     function deleteOccupation(id) {
