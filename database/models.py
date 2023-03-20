@@ -1,3 +1,5 @@
+from sqlalchemy.orm import relationship
+
 from database.database import db
 
 
@@ -33,7 +35,12 @@ class Stage(db.Model):
     resume = db.Column(db.Text)
     rapport = db.Column(db.Text)
     tutor = db.Column(db.Integer, db.ForeignKey('Tutor.id'))
+    tuttor = relationship("Tutor", backref="Stage")
     enterprise = db.Column(db.Integer, db.ForeignKey('Organisation.id'))
+    company = relationship("Organisation", backref="Stage")
+
+    def __repr__(self):
+        return f"<Stage(id={self.id}, title={self.title}, date_start={self.date_start}, date_end={self.date_end}, resume={self.resume}, rapport={self.rapport}, tutor={self.tutor}, enterprise={self.enterprise})> "
 
 class Promo(db.Model):
     __tablename__ = "Promo"
@@ -61,7 +68,12 @@ class Occupation(db.Model):
     end_date = db.Column(db.DateTime)
     id_user = db.Column(db.Integer, db.ForeignKey('User.id'))
     organisation = db.Column(db.Integer, db.ForeignKey('Organisation.id'))
+    company = relationship("Organisation", backref="Occupation")
     active = db.Column(db.Integer)
+
+    def __repr__(self):
+        return f"<Occupation(id={self.id}, title={self.title}, description={self.description}, id_user={self.id_user}, organisation={self.organisation})> "
+    
 
 class Filter :
     def __init__(self):

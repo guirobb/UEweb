@@ -12,63 +12,99 @@
 
 <div class="row">
     <div class="col-md-4 pt-3 text-center">
-        <img src="https://i.pravatar.cc/800" style="border-radius:50%; width:250px; weight:250px;" class="img-fluid">
+        <img src="https://i.pravatar.cc/900" style="border-radius:50%; width:250px; weight:250px;" class="img-fluid">
         <h1 class="mt-3"><strong>{{student.first_name}} {{student.name}}</strong> </h1>
-        <h4 class="text-primary">{{student.occupation}}</h4>
+        <h4 class="text-primary">Promotion {{promo.annee}}</h4>
     </div>
-    <div class="card col-md-8 p-3" style="border: none; border-radius: 15px;">
-        <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-start border border-0">
-            
-                <div class="ms-2 me-auto">
-                    <div class="fw-bold">{{ student.first_name }} {{ student.name }}</div>
-                    Promo : {{ promo.annee }}
-                </div>
-            
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start border border-0">
-            
-                Taf 1 : {{ taf1.name }}
-            
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start border border-0">
+	
+    <div class="col-md-8 p-1">
+        <h6 class="ms-1 text-primary fw-bold">Thématiques d’approfondissement choisis</h6>
+        <div class="col-12 card p-3 mb-5" style="border: none; border-radius: 15px; width: 100%">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-start border border-0">
 
-                Taf 2 : {{ taf2.name }}
+                    <div class="ms-1 me-2" style="font-size: 37px;">
+                        <i class="bi bi-1-circle text-primary"></i>
+                    </div>
 
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start border border-0">
+                    <div class="ms-2 me-auto">
+                        <h5 class="fw-bold me-2 mb-0">{{ taf1.name }}</h5>
+                       <span class="text-secondary h6">TAF 1</span>
+                    </div>
 
-                Intitulé de Stage: {{ stage.title }}
+                    <div class="ms-1 me-2" style="font-size: 37px;">
+                        <i class="bi bi-2-circle text-primary"></i>
+                    </div>
 
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start border border-0">
+                    <div class="ms-2 me-auto">
+                        <h5 class="fw-bold me-3 mb-0">{{ taf2.name }}</h5>
+                        <span class="text-secondary h6">TAF 2</span>
+                    </div>
 
-                Résumé : {{ stage.resume }}
+                </li>
+            </ul>
+        </div>
 
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start border border-0">
+        <h6 class="ms-1 text-primary fw-bold">Parcours professionnel</h6>
+        <div class="col-12 card p-3 mb-5" style="border: none; border-radius: 15px; width: 100%">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-start border-0 border-bottom">
 
+                    <div class="ms-1 me-4" style="font-size: 37px;">
+                        <i class="bi bi-briefcase text-success"></i>
+                    </div>
+
+                    <div class="ms-2 me-auto">
+                        <h5 class="fw-bold me-3 mb-0">{{ stage.title}}</h5>
+                       <span class="text-secondary h6">{{ stage.company.name }} ({% set start = stage.date_start | string() %}{{ start[:10] }} - {% set end = stage.date_end | string() %}{{ end[:10] }})</span>
+                        <p class="text-dark p mb-0"><b>Tutor: </b> {{ stage.tuttor.first_name}} {{ stage.tuttor.name }}</p>
+                        <p class="text-dark p mb-o"><b>Description: </b> {{ stage.resume }}</p>
+
+                    </div>
+
+                </li>
                 {% for occupation in occupations %}
-                    {%  if occupation.active==1 %}
+                <li class="list-group-item d-flex justify-content-between align-items-start border-0 border-bottom">
+                        <div class="ms-1 me-4" style="font-size: 37px;">
+                        <i class="bi bi-briefcase text-primary"></i>
+                    </div>
+
+                    <div class="ms-2 me-auto">
+                        <h5 class="fw-bold me-2 mb-0">{{ occupation.title }}</h5>
+                       <span class="text-secondary h6">{{ occupation.company.name}} ({% set startC = occupation.start_date | string() %}{{ startC[:10] }})</span>
+                        <p class="text-dark p"><b>Description: </b> {{ occupation.description}}</p>
+
+                    </div>
+					
+					{%  if occupation.active==1 %}
                      <div id="occupation-{{ occupation.id }}">
-                        <p style="font-weight: bold">{{ occupation.title }}</p>
-                        <p>{{ occupation.start_date.strftime('%d-%m-%Y') }}<p>
-                        <button onclick="deleteOccupation({{ occupation.id }})"> Delete </button>
+                        {# <p style="font-weight: bold">{{ occupation.title }}</p> #}
+                        {# <p>{{ occupation.start_date.strftime('%d-%m-%Y') }}<p> #}
+                        <button class="btn btn-light text-danger"  onclick="deleteOccupation({{ occupation.id }})">
+                        <i class="bi bi-trash"></i>
+                            Delete
+                        </button>
                     </div>
                     {%  else %}
                         <div id="occupation-{{ occupation.id }}">
-                            <p>{{ occupation.title }}</p>
-                        <p>{{ occupation.start_date.strftime('%d-%m-%Y') }}<p>
-                        <button onclick="deleteOccupation({{ occupation.id }})"> Delete </button>
+                            {# <p>{{ occupation.title }}</p> #}
+                        {# <p>{{ occupation.start_date.strftime('%d-%m-%Y') }}<p> #}
+                        <button class="btn btn-light text-danger" onclick="deleteOccupation({{ occupation.id }})">
+                            <i class="bi bi-trash"></i>
+                            Delete
+                        </button>
                     </div>
                     {%  endif %}
+					
+                </li>
                 {% endfor %}
 
-            </li>
-        </ul>
+            </ul>
+        </div>
     </div>
-</div>
 
+</div>
+</div>
 
 </div>
 <script>
