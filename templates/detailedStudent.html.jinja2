@@ -65,19 +65,17 @@
                 </li>
                 {% for occupation in occupations %}
                 <li class="list-group-item d-flex justify-content-between align-items-start border-0 border-bottom">
-                        <div class="ms-1 me-4" style="font-size: 37px;">
+                        <div class="ms-1 me-4" style="font-size: 37px;"  id="occupation-{{ occupation.id }}">
                         <i class="bi bi-briefcase text-primary"></i>
                     </div>
 
-                    <div class="ms-2 me-auto">
+                    <div class="ms-2 me-auto" id="occupation2-{{ occupation.id }}" >
                         <h5 class="fw-bold me-2 mb-0">{{ occupation.title }}</h5>
                        <span class="text-secondary h6">{{ occupation.company.name}} ({% set startC = occupation.start_date | string() %}{{ startC[:10] }})</span>
                         <p class="text-dark p"><b>Description: </b> {{ occupation.description}}</p>
 
                     </div>
-					
-					{%  if occupation.active==1 %}
-                     <div id="occupation-{{ occupation.id }}">
+                     <div  id="occupation3-{{ occupation.id }}">
                         {# <p style="font-weight: bold">{{ occupation.title }}</p> #}
                         {# <p>{{ occupation.start_date.strftime('%d-%m-%Y') }}<p> #}
                         <button class="btn btn-light text-danger"  onclick="deleteOccupation({{ occupation.id }})">
@@ -85,16 +83,7 @@
                             Delete
                         </button>
                     </div>
-                    {%  else %}
-                        <div id="occupation-{{ occupation.id }}">
-                            {# <p>{{ occupation.title }}</p> #}
-                        {# <p>{{ occupation.start_date.strftime('%d-%m-%Y') }}<p> #}
-                        <button class="btn btn-light text-danger" onclick="deleteOccupation({{ occupation.id }})">
-                            <i class="bi bi-trash"></i>
-                            Delete
-                        </button>
-                    </div>
-                    {%  endif %}
+
 					
                 </li>
                 {% endfor %}
@@ -111,6 +100,8 @@
     function deleteOccupation(id) {
         console.log(id);
         let el = document.getElementById(`occupation-${id}`);
+        let el2 = document.getElementById(`occupation2-${id}`);
+        let el3 = document.getElementById(`occupation3-${id}`);
         let xhr = new XMLHttpRequest();
         let url = "../../delete/occupation";
         xhr.open("POST", url, true);
@@ -124,6 +115,8 @@
         var data = JSON.stringify({ "id": id});
         xhr.send(data);
         el.classList.add("hidden");
+        el2.classList.add("hidden");
+        el3.classList.add("hidden");
     }
     function detailed(promo){
         const url = "http://127.0.0.1:5000/detail/tuttor?id="+promo;
