@@ -57,7 +57,7 @@
                     <div class="ms-2 me-auto">
                         <h5 class="fw-bold me-3 mb-0">{{ stage.title}}</h5>
                        <span class="text-secondary h6">{{ stage.company.name }} ({% set start = stage.date_start | string() %}{{ start[:10] }} - {% set end = stage.date_end | string() %}{{ end[:10] }})</span>
-                        <p class="text-dark p mb-0"><b>Tutor: </b> {{ stage.tuttor.first_name}} {{ stage.tuttor.name }}</p>
+                        <p class="text-dark p mb-0" onclick="detailed({{ stage.tuttor.id }})"><b>Tutor: </b> {{ stage.tuttor.first_name}} {{ stage.tuttor.name }}</p>
                         <p class="text-dark p mb-o"><b>Description: </b> {{ stage.resume }}</p>
 
                     </div>
@@ -125,5 +125,9 @@
         xhr.send(data);
         el.classList.add("hidden");
     }
+    function detailed(promo){
+        const url = "http://127.0.0.1:5000/detail/tuttor?id="+promo;
+        window.location.href = url;
+    };
 </script>
 {% endblock %}

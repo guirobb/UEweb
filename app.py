@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, date
 from sqlalchemy.sql import func
 from database.models import *
 import os
@@ -64,18 +64,6 @@ def login():
     return render_template("login.html.jinja2", accounts=accounts, num=num)
 
 
-@app.route("/test")
-def test():
-    clean()
-    # student1 = Taf(name="Dassault", director="Pastor")
-    # db.session.add(student1)
-    # db.session.commit()
-    create_test_db()
-    sports = Taf.query.all()
-
-    return render_template("index.html.jinja2", sports=sports)
-
-
 @app.route('/list/students')
 def students():
     students = db.session.query(User, Promo, Stage).join(Promo, Stage).all()
@@ -119,25 +107,12 @@ def list_Taf():
     list_taf = Taf.query.all()
     return render_template("listTaf.html.jinja2", listTaf=list_taf)
 
-
-@app.route('/admin/taf/edit')
-def edit_taf():
-    id_taf = request.args.get('id', default='*', type=int)
-    taf = Taf.query.filter(Taf.id == id_taf)
-    return render_template("editTaf.html.jinja2", taf=taf)
-
-
 @app.route('/admin/companies/list')
 def list_company():
     companies = Organisation.query.all()
     return render_template("listEnterprises.html.jinja2", companies=companies)
 
 
-@app.route('/admin/company/edit')
-def edit_company():
-    id_company = request.args.get('id', default='*', type=int)
-    enterp = Organisation.query.filter(Organisation.id == id_company)
-    return render_template("editTaf.html.jinja2", company=enterp)
 
 
 @app.route('/admin/promo/list')
@@ -269,7 +244,7 @@ def search_enterprise():
     print(search_text)
     enterprises = Organisation.query.filter(Organisation.name.ilike(f'%{search_text}%')).all()
     print(enterprises)
-    return render_template("enterprise.html.jinja2", enterprises=enterprises)
+    return render_template("listEnterprise.html.jinja2", enterprises=enterprises)
 
 
 @app.route("/add/student", methods=["POST"])
@@ -283,8 +258,9 @@ def addStudent():
     taf2 = request.form['select-TAF2']
     promo = request.form['select-Promo']
     account_id = request.form['id_user']
-    db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, 0, promo, " occupation")
+    db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, 0, promo)
     student = User.query.filter(User.first_name == first_name, User.name == name, User.taf1 == taf1, User.taf2 == taf2)
+    db_addOccupation("Alumni","ancien élève","2022-01-01",student[0].id,10,1)
     db_linkAccount(account_id, student[0].id)
     return redirect("http://127.0.0.1:5000/admin/internship/new?studentId=" + str(student[0].id))
 
@@ -303,7 +279,7 @@ def addStage():
         first_name = request.form["Input-firstnameTutor"]
         number = request.form["Input-numberTutor"]
         email = request.form["Input-emailTutor"]
-        db_addTutor(name,first_name,number,email)
+        db_addTutor(name,first_name,number,email,enterprise)
         tutors = Tutor.query.all()
         tutor = tutors[len(tutors)-1].id
         db_addStage(title, date_start, date_end, resume, rapport, tutor, enterprise)
@@ -356,6 +332,7 @@ def research_internship():
     return redirect("http://127.0.0.1:5000/list/students")
 
 
+
 @app.route("/detail/student")
 def detailed_student():
     id = request.args.get('id', default='*', type=int)
@@ -368,6 +345,13 @@ def detailed_student():
     occupations = Occupation.query.filter(Occupation.id_user == student.id)
     return render_template("detailedStudent.html.jinja2", student=student, taf1=taf1, taf2=taf2, stage=stage,
                            promo=promo, occupations=occupations)
+
+@app.route("/detail/tuttor")
+def detailed_tutor():
+    id = request.args.get('id', default='*', type=int)
+    tutor = Tutor.query.filter(Tutor.id == id)
+    print(tutor[0])
+    return render_template("displayTutor.html.jinja2", tutor=tutor)
 
 
 @app.route("/connection")

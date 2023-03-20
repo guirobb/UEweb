@@ -7,7 +7,7 @@ def db_addStudent(first_name, name, nationality, birth_date, taf1, taf2, stage, 
                                     '%Y-%m-%d')
     student = User(first_name=first_name, name=name, nationality=nationality, birth_date=birth_date2, taf1=taf1,
                    taf2=taf2,
-                   stage=stage, promo=promo, role="user")
+                   stage=stage, promo=promo)
     print(student)
     db.session.add(student)
     print(db.session.commit())
